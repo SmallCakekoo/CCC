@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registro de Finca/Lote - Agricultura Carbono Consciente</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="assets/logo-white.png"
+            alt="Agricultura Carbono Consciente"
+            style="height: 40px; margin-right: 1rem"
+          />
+          <span>Agricultura Carbono Consciente</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#monitoreo">Monitoreo</a></li>
+          <li><a href="index.html#investigacion">Investigación</a></li>
+          <li><a href="index.html#certificacion">Certificación</a></li>
+          <li>
+            <a href="consumidor-modo.html" class="nav-consumer">Consumidor</a>
+          </li>
+          <li>
+            <a href="login-agricultor.html" class="nav-producer">Agricultor</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 4rem 2rem">
+      <div class="hero-content">
+        <h1><i class="fas fa-seedling"></i> Registro de Finca/Lote</h1>
+        <p>
+          Únete a la red de productores carbono consciente y comienza tu camino
+          hacia la agricultura sostenible
+        </p>
+      </div>
+    </section>
+
+    <!-- Registration Form -->
+    <section class="section">
+      <div class="section-title">
+        <h2>Información de tu Finca</h2>
+        <p>Completa los datos para comenzar el proceso de certificación</p>
+      </div>
+
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          max-width: 900px;
+          margin: 0 auto;
+        "
+      >
+        <form
+          id="producerRegistrationForm"
+          onsubmit="submitProducerRegistration(event)"
+        >
+          <!-- Personal Information -->
+          <div class="form-section">
+            <h3
+              style="
+                color: var(--primary);
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+              "
+            >
+              <i class="fas fa-user"></i> Información Personal
+            </h3>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+              "
+            >
+              <div class="form-group">
+                <label for="producerName">
+                  <i class="fas fa-user"></i> Nombre del Productor *
+                </label>
+                <input
+                  type="text"
+                  id="producerName"
+                  required
+                  placeholder="Tu nombre completo"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <label for="email">
+                  <i class="fas fa-envelope"></i> Correo Electrónico *
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  required
+                  placeholder="tu@email.com"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <label for="phone">
+                  <i class="fas fa-phone"></i> Teléfono
+                </label>
+                <input
+                  type="tel"
+                  id="phone"
+                  placeholder="+57 300 123 4567"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <label for="experience">
+                  <i class="fas fa-calendar-alt"></i> Años de Experiencia en
+                  Agricultura
+                </label>
+                <input
+                  type="number"
+                  id="experience"
+                  min="0"
+                  placeholder="Ej: 5"
+                  class="form-input"
+                />
+              </div>
+            </div>
+          </div>
+
+          <!-- Farm Information -->
+          <div class="form-section">
+            <h3
+              style="
+                color: var(--primary);
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+              "
+            >
+              <i class="fas fa-tractor"></i> Información de la Finca
+            </h3>
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+              "
+            >
+              <div class="form-group">
+                <label for="farmName">
+                  <i class="fas fa-home"></i> Nombre de la Finca *
+                </label>
+                <input
+                  type="text"
+                  id="farmName"
+                  required
+                  placeholder="Ej: Finca La Esperanza"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <label for="location">
+                  <i class="fas fa-map-marker-alt"></i> Ubicación (Municipio,
+                  Departamento) *
+                </label>
+                <input
+                  type="text"
+                  id="location"
+                  required
+                  placeholder="Ej: Jamundí, Valle del Cauca"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <label for="farmSize">
+                  <i class="fas fa-expand-arrows-alt"></i> Tamaño de la Finca
+                  (hectáreas) *
+                </label>
+                <input
+                  type="number"
+                  id="farmSize"
+                  required
+                  min="0.1"
+                  step="0.1"
+                  placeholder="Ej: 5.5"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <label for="cropType">
+                  <i class="fas fa-seedling"></i> Tipo de Cultivo Principal *
+                </label>
+                <select id="cropType" required class="form-input">
+                  <option value="">Selecciona tu cultivo principal...</option>
+                  <option value="arroz">Arroz</option>
+                  <option value="maiz">Maíz</option>
+                  <option value="soja">Soja</option>
+                  <option value="cafe">Café</option>
+                  <option value="ganaderia">Ganadería</option>
+                  <option value="hortalizas">Hortalizas</option>
+                  <option value="frutales">Frutales</option>
+                  <option value="otros">Otros</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- Additional Information -->
+          <div class="form-section">
+            <h3
+              style="
+                color: var(--primary);
+                margin-bottom: 1.5rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+              "
+            >
+              <i class="fas fa-leaf"></i> Prácticas y Objetivos
+            </h3>
+            <div style="display: grid; gap: 2rem">
+              <div class="form-group">
+                <label for="currentPractices">
+                  <i class="fas fa-tools"></i> Prácticas Actuales
+                </label>
+                <textarea
+                  id="currentPractices"
+                  rows="4"
+                  placeholder="Describe las prácticas agrícolas que implementas actualmente (riego, fertilización, manejo de plagas, etc.)..."
+                  class="form-input"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label for="sustainabilityGoals">
+                  <i class="fas fa-target"></i> Objetivos de Sostenibilidad
+                </label>
+                <textarea
+                  id="sustainabilityGoals"
+                  rows="3"
+                  placeholder="¿Qué objetivos tienes en términos de sostenibilidad y reducción de emisiones? ¿Qué te motiva a participar en este programa?"
+                  class="form-input"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- Terms and Conditions -->
+          <div class="form-section">
+            <div
+              style="
+                background: #f8f9fa;
+                padding: 2rem;
+                border-radius: 15px;
+                margin: 2rem 0;
+              "
+            >
+              <h4 style="color: var(--primary); margin-bottom: 1rem">
+                <i class="fas fa-shield-alt"></i> Términos y Condiciones
+              </h4>
+              <div style="display: flex; align-items: center">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  required
+                  style="margin-top: 0.3rem"
+                />
+                <label for="terms" style="color: #666; line-height: 1.6">
+                  Acepto los términos y condiciones del programa Agricultura
+                  Carbono Consciente. Entiendo que mis datos serán utilizados
+                  para el proceso de certificación y que recibiré información
+                  sobre prácticas sostenibles y oportunidades de mejora.
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div style="text-align: center; margin-top: 3rem">
+            <button
+              type="submit"
+              class="btn btn-primary"
+              style="padding: 1.2rem 4rem; font-size: 1.2rem"
+            >
+              <i class="fas fa-paper-plane"></i> Enviar Registro
+            </button>
+            <p style="color: #666; margin-top: 1rem; font-size: 0.9rem">
+              Te contactaremos en un plazo máximo de 48 horas para continuar con
+              el proceso
+            </p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Benefits Section -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin: 3rem 0;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-gift"></i> Beneficios de Registrarte
+        </h3>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+          "
+        >
+          <div style="text-align: center; padding: 1.5rem">
+            <i
+              class="fas fa-chart-line"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Monitoreo Gratuito
+            </h4>
+            <p style="color: #666">
+              Acceso al panel de emisiones y sensores IoT
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem">
+            <i
+              class="fas fa-graduation-cap"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Capacitación
+            </h4>
+            <p style="color: #666">
+              Cursos certificados sobre agricultura sostenible
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem">
+            <i
+              class="fas fa-dollar-sign"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Incentivos
+            </h4>
+            <p style="color: #666">Pagos por servicios ecosistémicos</p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem">
+            <i
+              class="fas fa-users"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Comunidad
+            </h4>
+            <p style="color: #666">Red de productores y expertos</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>
+            <div class="logo">
+              <img
+                src="assets/logo-white.png"
+                alt="Agricultura Carbono Consciente"
+                style="height: 40px; margin-right: 1rem"
+              />
+              <span>Agricultura Carbono Consciente</span>
+            </div>
+          </h4>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem">
+            Plataforma nacional para la sostenibilidad agrícola y la acción
+            climática.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="index.html#monitoreo">Panel de Monitoreo</a></li>
+            <li><a href="index.html#investigacion">Investigación</a></li>
+            <li><a href="index.html#certificacion">Certificación</a></li>
+            <li><a href="consumidor-modo.html">Zona Consumidor</a></li>
+            <li><a href="login-agricultor.html">Panel Agricultor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Política y Educación</h4>
+          <ul>
+            <li><a href="#">Apoyo a NDC Colombia</a></li>
+            <li><a href="#">Capacitaciones</a></li>
+            <li><a href="#">Convenios Institucionales</a></li>
+            <li><a href="#">Documentación Técnica</a></li>
+            <li><a href="#">Guías de Usuario</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 0.5rem"></i>
+              info@carbonoconsciente.gov.co
+            </li>
+            <li>
+              <i class="fas fa-phone" style="margin-right: 0.5rem"> </i> +57 321
+              123 00 00
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem"></i>
+              Cali, Colombia
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Plataforma Nacional de Agricultura Carbono Consciente.
+          Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <style>
+      /* Enhanced Registration Form Styles */
+      .form-group {
+        margin-bottom: 1.5rem;
+      }
+
+      .form-group label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+      }
+
+      .form-group label i {
+        color: var(--secondary);
+        width: 16px;
+        text-align: center;
+      }
+
+      .form-input {
+        width: 100%;
+        padding: 1rem 1.2rem;
+        border: 2px solid var(--accent);
+        border-radius: 12px;
+        font-size: 1rem;
+        font-family: "Poppins", sans-serif;
+        background: #fafafa;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+      }
+
+      .form-input:focus {
+        outline: none;
+        border-color: var(--secondary);
+        background: white;
+        box-shadow: 0 0 0 3px rgba(115, 160, 78, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .form-input:hover {
+        border-color: var(--secondary);
+        background: white;
+      }
+
+      .form-input::placeholder {
+        color: #999;
+        font-style: italic;
+      }
+
+      select.form-input {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.75rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+        padding-right: 2.5rem;
+        appearance: none;
+      }
+
+      textarea.form-input {
+        resize: vertical;
+        min-height: 120px;
+        line-height: 1.6;
+      }
+
+      .form-section {
+        margin-bottom: 3rem;
+        padding: 2rem;
+        background: linear-gradient(135deg, #ffffff 0%, var(--light) 100%);
+        border-radius: 20px;
+        border: 1px solid var(--accent);
+      }
+
+      .form-section h3 {
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid var(--accent);
+      }
+
+      /* Enhanced submit button */
+      .btn-primary {
+        background: linear-gradient(
+          135deg,
+          var(--secondary) 0%,
+          var(--primary) 100%
+        );
+        border: none;
+        box-shadow: 0 4px 15px rgba(115, 160, 78, 0.3);
+        transition: all 0.3s ease;
+        color: #ffffff; /* Ensure strong contrast */
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(115, 160, 78, 0.4);
+        color: #ffffff;
+      }
+
+      /* Progress indicator */
+      .form-progress {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        margin-bottom: 2rem;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .progress-bar {
+        width: 100%;
+        height: 8px;
+        background: #e9ecef;
+        border-radius: 4px;
+        overflow: hidden;
+        margin-bottom: 1rem;
+      }
+
+      .progress-fill {
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          var(--secondary) 0%,
+          var(--primary) 100%
+        );
+        width: 0%;
+        transition: width 0.3s ease;
+      }
+
+      .progress-text {
+        text-align: center;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+    </style>
+  </body>
+</html>

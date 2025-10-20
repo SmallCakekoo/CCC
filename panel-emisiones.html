@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Emisiones - Agricultura Carbono Consciente</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="assets/logo-white.png"
+            alt="Agricultura Carbono Consciente"
+            style="height: 40px; margin-right: 1rem"
+          />
+          <span>Agricultura Carbono Consciente</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#monitoreo">Monitoreo</a></li>
+          <li><a href="index.html#investigacion">Investigación</a></li>
+          <li><a href="index.html#certificacion">Certificación</a></li>
+          <li>
+            <a href="consumidor-modo.html" class="nav-consumer">Consumidor</a>
+          </li>
+          <li>
+            <a href="login-agricultor.html" class="nav-producer">Agricultor</a>
+          </li>
+          <li>
+            <button
+              class="btn btn-secondary logout-btn"
+              onclick="logoutAgricultor()"
+              style="margin-left: 1rem; padding: 0.5rem 1rem; font-size: 0.9rem"
+            >
+              <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 3rem 2rem">
+      <div class="hero-content">
+        <h1><i class="fas fa-chart-line"></i> Panel Personal de Emisiones</h1>
+        <p>
+          Monitorea, analiza y optimiza las emisiones de tu finca en tiempo real
+        </p>
+      </div>
+    </section>
+
+    <!-- Dashboard Section -->
+    <section class="section">
+      <!-- Quick Stats -->
+      <div class="stats" style="margin-bottom: 3rem">
+        <div class="stat-card">
+          <i class="fas fa-cloud"></i>
+          <h3>180</h3>
+          <p>CH₄ kg/ha este mes</p>
+          <span style="color: var(--secondary); font-size: 0.9rem"
+            >↓ 18% vs mes anterior</span
+          >
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-wind"></i>
+          <h3>8.2</h3>
+          <p>N₂O kg/ha este mes</p>
+          <span style="color: var(--secondary); font-size: 0.9rem"
+            >↓ 22% vs mes anterior</span
+          >
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-leaf"></i>
+          <h3>35%</h3>
+          <p>Reducción total</p>
+          <span style="color: var(--secondary); font-size: 0.9rem"
+            >vs promedio regional</span
+          >
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-trophy"></i>
+          <h3>8/10</h3>
+          <p>Puntos sostenibilidad</p>
+          <span style="color: var(--secondary); font-size: 0.9rem"
+            >Objetivo: 10/10</span
+          >
+        </div>
+      </div>
+
+      <!-- Main Dashboard -->
+      <div
+        class="dashboard-grid"
+        style="grid-template-columns: 1fr 1fr 1fr; gap: 2rem"
+      >
+        <!-- Emissions Chart -->
+        <div class="dashboard-card" style="grid-column: 1 / -1">
+          <h3><i class="fas fa-chart-area"></i> Evolución de Emisiones</h3>
+          <div class="chart-container" style="height: 300px">
+            <canvas id="emissionsChart"></canvas>
+          </div>
+          <div
+            style="
+              display: flex;
+              justify-content: space-between;
+              margin-top: 1rem;
+            "
+          >
+            <button class="export-btn" onclick="exportReport('pdf')">
+              <i class="fas fa-file-pdf" style="color: var(--light)"></i>
+              Exportar PDF
+            </button>
+            <button class="export-btn" onclick="exportReport('excel')">
+              <i class="fas fa-file-excel" style="color: var(--light)"></i>
+              Exportar Excel
+            </button>
+          </div>
+        </div>
+
+        <!-- Real-time Sensors -->
+        <div class="dashboard-card">
+          <h3>
+            <i class="fas fa-thermometer-half"></i> Sensores en Tiempo Real
+          </h3>
+          <div class="metric">
+            <span class="metric-label">Temperatura</span>
+            <span class="metric-value" id="tempValue">28.5°C</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Humedad</span>
+            <span class="metric-value" id="humidityValue">75%</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Nivel de agua</span>
+            <span class="metric-value" id="waterLevelValue">Óptimo</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Última lectura</span>
+            <span class="metric-value" id="lastReadingValue">Hace 2 min</span>
+          </div>
+          <div style="margin-top: 1rem">
+            <button
+              class="btn btn-primary"
+              onclick="refreshSensors()"
+              style="width: 100%"
+            >
+              <i class="fas fa-sync"></i> Actualizar Datos
+            </button>
+          </div>
+        </div>
+
+        <!-- Crop Rotation Schedule -->
+        <div class="dashboard-card">
+          <h3><i class="fas fa-calendar-alt"></i> Cronograma de Rotación</h3>
+          <div style="margin-bottom: 1rem">
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Próximas Actividades
+            </h4>
+            <div
+              style="
+                background: #f8f9fa;
+                padding: 1rem;
+                border-radius: 10px;
+                margin-bottom: 1rem;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <strong>Siembra de Leguminosas</strong>
+                  <p style="color: #666; margin: 0; font-size: 0.9rem">
+                    Lote #2
+                  </p>
+                </div>
+                <span
+                  style="
+                    background: var(--secondary);
+                    color: white;
+                    padding: 0.3rem 0.8rem;
+                    border-radius: 15px;
+                    font-size: 0.8rem;
+                  "
+                  >En 3 días</span
+                >
+              </div>
+            </div>
+            <div
+              style="
+                background: #f8f9fa;
+                padding: 1rem;
+                border-radius: 10px;
+                margin-bottom: 1rem;
+              "
+            >
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                "
+              >
+                <div>
+                  <strong>Aplicación de Cobertura</strong>
+                  <p style="color: #666; margin: 0; font-size: 0.9rem">
+                    Lote #4
+                  </p>
+                </div>
+                <span
+                  style="
+                    background: var(--accent);
+                    color: var(--primary);
+                    padding: 0.3rem 0.8rem;
+                    border-radius: 15px;
+                    font-size: 0.8rem;
+                  "
+                  >En 1 semana</span
+                >
+              </div>
+            </div>
+          </div>
+          <button
+            class="btn btn-secondary"
+            onclick="viewFullSchedule()"
+            style="
+              width: 100%;
+              background-color: var(--primary);
+              color: var(--light);
+            "
+          >
+            <i class="fas fa-calendar" style="color: var(--light)"></i> Ver
+            Cronograma Completo
+          </button>
+        </div>
+
+        <!-- Smart Alerts -->
+        <div class="dashboard-card">
+          <h3><i class="fas fa-bell"></i> Alertas Inteligentes</h3>
+          <div id="smartAlerts">
+            <div class="alert-box" style="margin-bottom: 1rem">
+              <h4><i class="fas fa-lightbulb"></i> Optimización de Riego</h4>
+              <p>
+                Reducir los días de anegamiento en 2 días puede disminuir tus
+                emisiones de CH₄ en un 15%. Tu lote #3 presenta condiciones
+                óptimas.
+              </p>
+              <div class="recommendation-priority priority-high">
+                Prioridad: Alta
+              </div>
+            </div>
+            <div class="alert-box" style="margin-bottom: 1rem">
+              <h4><i class="fas fa-seedling"></i> Rotación Recomendada</h4>
+              <p>
+                Es momento de implementar rotación con leguminosas en el lote
+                #2. Esto mejorará la fertilidad del suelo y reducirá
+                fertilizantes.
+              </p>
+              <div class="recommendation-priority priority-medium">
+                Prioridad: Media
+              </div>
+            </div>
+          </div>
+          <button
+            class="btn btn-primary"
+            onclick="generateNewRecommendations()"
+            style="width: 100%; margin-top: 1rem"
+          >
+            <i class="fas fa-magic"></i> Generar Nuevas Recomendaciones
+          </button>
+        </div>
+      </div>
+
+      <!-- Farm Management Tools -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin: 3rem 0;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-tools"></i> Herramientas de Gestión
+        </h3>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+          "
+        >
+          <div
+            style="
+              text-align: center;
+              padding: 2rem;
+              border: 2px solid var(--accent);
+              border-radius: 15px;
+            "
+          >
+            <i
+              class="fas fa-seedling"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              Registro de Prácticas
+            </h4>
+            <p style="color: #666; margin-bottom: 1.5rem">
+              Registra las prácticas agrícolas implementadas
+            </p>
+            <button class="btn btn-primary" onclick="openPracticeRegister()">
+              <i class="fas fa-plus"></i> Registrar Práctica
+            </button>
+          </div>
+          <div
+            style="
+              text-align: center;
+              padding: 2rem;
+              border: 2px solid var(--accent);
+              border-radius: 15px;
+            "
+          >
+            <i
+              class="fas fa-camera"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              Fotos de Campo
+            </h4>
+            <p style="color: #666; margin-bottom: 1.5rem">
+              Documenta el estado de tus cultivos
+            </p>
+            <button class="btn btn-primary" onclick="openPhotoUpload()">
+              <i class="fas fa-upload"></i> Subir Fotos
+            </button>
+          </div>
+          <div
+            style="
+              text-align: center;
+              padding: 2rem;
+              border: 2px solid var(--accent);
+              border-radius: 15px;
+            "
+          >
+            <i
+              class="fas fa-chart-pie"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              Análisis Detallado
+            </h4>
+            <p style="color: #666; margin-bottom: 1.5rem">
+              Análisis avanzado de datos y tendencias
+            </p>
+            <button class="btn btn-primary" onclick="openDetailedAnalysis()">
+              <i class="fas fa-analytics"></i> Ver Análisis
+            </button>
+          </div>
+          <div
+            style="
+              text-align: center;
+              padding: 2rem;
+              border: 2px solid var(--accent);
+              border-radius: 15px;
+            "
+          >
+            <i
+              class="fas fa-users"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              Comunidad
+            </h4>
+            <p style="color: #666; margin-bottom: 1.5rem">
+              Conecta con otros productores
+            </p>
+            <button class="btn btn-primary" onclick="goToCommunity()">
+              <i class="fas fa-comments"></i> Ir a Comunidad
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div
+        style="
+          background: linear-gradient(
+            135deg,
+            var(--primary) 0%,
+            var(--secondary) 100%
+          );
+          padding: 3rem;
+          border-radius: 20px;
+          margin: 3rem 0;
+          color: white;
+        "
+      >
+        <h3 style="text-align: center; margin-bottom: 2rem">
+          <i class="fas fa-bolt"></i> Acciones Rápidas
+        </h3>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+          "
+        >
+          <button
+            class="btn btn-secondary"
+            onclick="goToRegistration()"
+            style="padding: 1rem"
+          >
+            <i class="fas fa-plus-circle"></i> Registrar Nueva Finca
+          </button>
+          <button
+            class="btn btn-secondary"
+            onclick="goToQRScanner()"
+            style="padding: 1rem"
+          >
+            <i class="fas fa-qrcode"></i> Escanear Producto
+          </button>
+          <button
+            class="btn btn-secondary"
+            onclick="goToGamification()"
+            style="padding: 1rem"
+          >
+            <i class="fas fa-trophy"></i> Ver Logros
+          </button>
+          <button
+            class="btn btn-secondary"
+            onclick="requestSupport()"
+            style="padding: 1rem"
+          >
+            <i class="fas fa-headset"></i> Solicitar Soporte
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>
+            <div class="logo">
+              <img
+                src="assets/logo-white.png"
+                alt="Agricultura Carbono Consciente"
+                style="height: 40px; margin-right: 1rem"
+              />
+              <span>Agricultura Carbono Consciente</span>
+            </div>
+          </h4>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem">
+            Plataforma nacional para la sostenibilidad agrícola y la acción
+            climática.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="index.html#monitoreo">Panel de Monitoreo</a></li>
+            <li><a href="index.html#investigacion">Investigación</a></li>
+            <li><a href="index.html#certificacion">Certificación</a></li>
+            <li><a href="consumidor-modo.html">Zona Consumidor</a></li>
+            <li><a href="login-agricultor.html">Panel Agricultor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Política y Educación</h4>
+          <ul>
+            <li><a href="#">Apoyo a NDC Colombia</a></li>
+            <li><a href="#">Capacitaciones</a></li>
+            <li><a href="#">Convenios Institucionales</a></li>
+            <li><a href="#">Documentación Técnica</a></li>
+            <li><a href="#">Guías de Usuario</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 0.5rem"></i>
+              info@carbonoconsciente.gov.co
+            </li>
+            <li>
+              <i class="fas fa-phone" style="margin-right: 0.5rem"> </i> +57 321
+              123 00 00
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem"></i>
+              Cali, Colombia
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Plataforma Nacional de Agricultura Carbono Consciente.
+          Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Check login status
+      document.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem("agricultorLoggedIn") !== "true") {
+          alert("Debes iniciar sesión para acceder al panel de agricultor");
+          window.location.href = "login-agricultor.html";
+          return;
+        }
+
+        // Show welcome message
+        const userEmail =
+          localStorage.getItem("agricultorEmail") || "Agricultor";
+        showNotification(`¡Bienvenido de nuevo, ${userEmail}!`, "success");
+      });
+
+      // Logout function
+      function logoutAgricultor() {
+        localStorage.removeItem("agricultorLoggedIn");
+        localStorage.removeItem("agricultorEmail");
+        localStorage.removeItem("loginTime");
+        showNotification("Sesión cerrada exitosamente", "info");
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, 1500);
+      }
+
+      // Initialize Emissions Chart
+      function initializeEmissionsChart() {
+        const ctx = document.getElementById("emissionsChart").getContext("2d");
+        new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: [
+              "Ene",
+              "Feb",
+              "Mar",
+              "Abr",
+              "May",
+              "Jun",
+              "Jul",
+              "Ago",
+              "Sep",
+              "Oct",
+              "Nov",
+              "Dic",
+            ],
+            datasets: [
+              {
+                label: "CH₄ (kg/ha)",
+                data: [
+                  320, 280, 250, 220, 200, 180, 175, 170, 165, 160, 155, 150,
+                ],
+                borderColor: "#73a04e",
+                backgroundColor: "rgba(115, 160, 78, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+              },
+              {
+                label: "N₂O (kg/ha)",
+                data: [18, 16, 14, 12, 10, 8, 7.5, 7, 6.5, 6, 5.5, 5],
+                borderColor: "#d2dc8f",
+                backgroundColor: "rgba(210, 220, 143, 0.1)",
+                borderWidth: 3,
+                fill: true,
+                tension: 0.4,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: {
+                display: true,
+                position: "top",
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                grid: {
+                  color: "rgba(0,0,0,0.1)",
+                },
+              },
+              x: {
+                grid: {
+                  display: false,
+                },
+              },
+            },
+          },
+        });
+      }
+
+      // Sensor Data Functions
+      function refreshSensors() {
+        // Simulate sensor data update
+        const temp = (25 + Math.random() * 8).toFixed(1);
+        const humidity = (70 + Math.random() * 15).toFixed(0);
+        const levels = ["Bajo", "Óptimo", "Alto"];
+        const waterLevel = levels[Math.floor(Math.random() * levels.length)];
+        const lastReading = "Hace " + Math.floor(Math.random() * 5) + " min";
+
+        document.getElementById("tempValue").textContent = temp + "°C";
+        document.getElementById("humidityValue").textContent = humidity + "%";
+        document.getElementById("waterLevelValue").textContent = waterLevel;
+        document.getElementById("lastReadingValue").textContent = lastReading;
+
+        showNotification("Datos de sensores actualizados", "success");
+      }
+
+      // Smart Recommendations
+      function generateNewRecommendations() {
+        const alertsContainer = document.getElementById("smartAlerts");
+        const recommendations = [
+          {
+            icon: "fas fa-tint",
+            title: "Optimización de Agua",
+            message:
+              "Implementar riego por goteo puede reducir el consumo de agua en un 30% y las emisiones de CH₄.",
+            priority: "high",
+          },
+          {
+            icon: "fas fa-seedling",
+            title: "Cobertura Vegetal",
+            message:
+              "Mantener cobertura vegetal durante el barbecho puede mejorar la salud del suelo y reducir emisiones.",
+            priority: "medium",
+          },
+          {
+            icon: "fas fa-recycle",
+            title: "Compostaje",
+            message:
+              "Implementar compostaje de residuos orgánicos puede reducir la necesidad de fertilizantes químicos.",
+            priority: "low",
+          },
+        ];
+
+        const randomRecommendation =
+          recommendations[Math.floor(Math.random() * recommendations.length)];
+
+        const newAlert = document.createElement("div");
+        newAlert.className = "alert-box";
+        newAlert.style.marginBottom = "1rem";
+        newAlert.innerHTML = `
+          <h4><i class="${randomRecommendation.icon}"></i> ${
+          randomRecommendation.title
+        }</h4>
+          <p>${randomRecommendation.message}</p>
+          <div class="recommendation-priority priority-${
+            randomRecommendation.priority
+          }">
+            Prioridad: ${
+              randomRecommendation.priority === "high"
+                ? "Alta"
+                : randomRecommendation.priority === "medium"
+                ? "Media"
+                : "Baja"
+            }
+          </div>
+        `;
+
+        alertsContainer.insertBefore(newAlert, alertsContainer.firstChild);
+        showNotification("Nueva recomendación generada", "success");
+      }
+
+      // Management Tools Functions
+      function openPracticeRegister() {
+        showNotification(
+          "Funcionalidad de registro de prácticas próximamente",
+          "info"
+        );
+      }
+
+      function openPhotoUpload() {
+        showNotification(
+          "Funcionalidad de subida de fotos próximamente",
+          "info"
+        );
+      }
+
+      function openDetailedAnalysis() {
+        showNotification("Análisis detallado próximamente", "info");
+      }
+
+      function viewFullSchedule() {
+        showNotification("Cronograma completo próximamente", "info");
+      }
+
+      function requestSupport() {
+        showNotification(
+          "Soporte técnico contactado. Te responderemos pronto.",
+          "success"
+        );
+      }
+
+      // Initialize everything when page loads
+      document.addEventListener("DOMContentLoaded", function () {
+        initializeEmissionsChart();
+
+        // Update sensors every 30 seconds
+        setInterval(refreshSensors, 30000);
+
+        // Generate new recommendations every 5 minutes
+        setInterval(generateNewRecommendations, 300000);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Agricultor - Agricultura Carbono Consciente</title>
+    <link rel="icon" href="assets/logo-white.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="assets/logo-white.png"
+            alt="Agricultura Carbono Consciente"
+            style="height: 40px; margin-right: 1rem"
+          />
+          <span>Agricultura Carbono Consciente</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#monitoreo">Monitoreo</a></li>
+          <li><a href="index.html#investigacion">Investigación</a></li>
+          <li><a href="index.html#certificacion">Certificación</a></li>
+          <li>
+            <a href="consumidor-modo.html" class="nav-consumer">Consumidor</a>
+          </li>
+          <li>
+            <a href="login-agricultor.html" class="nav-producer">Agricultor</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 4rem 2rem">
+      <div class="hero-content">
+        <h1><i class="fas fa-tractor"></i> Acceso Agricultor</h1>
+        <p>
+          Inicia sesión para acceder a tu panel personal de emisiones y gestión
+          de finca
+        </p>
+      </div>
+    </section>
+
+    <!-- Login Form -->
+    <section class="section">
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin-bottom: 3rem;
+          text-align: center;
+          max-width: 500px;
+          margin: 0 auto;
+        "
+      >
+        <h3 style="color: var(--primary); margin-bottom: 1.5rem">
+          <i class="fas fa-user-circle"></i> Iniciar Sesión
+        </h3>
+        <p style="color: #666; margin-bottom: 2rem">
+          Accede a tu panel de agricultor para gestionar emisiones y
+          certificaciones
+        </p>
+
+        <form id="loginForm" onsubmit="loginAgricultor(event)">
+          <div style="margin-bottom: 1.5rem">
+            <input
+              type="email"
+              id="agricultorEmail"
+              placeholder="Correo electrónico"
+              required
+              style="
+                width: 100%;
+                padding: 1rem;
+                border: 2px solid var(--accent);
+                border-radius: 10px;
+                font-size: 1rem;
+                margin-bottom: 1rem;
+                font-family: 'Poppins', sans-serif;
+              "
+            />
+            <input
+              type="password"
+              id="agricultorPassword"
+              placeholder="Contraseña"
+              required
+              style="
+                width: 100%;
+                padding: 1rem;
+                border: 2px solid var(--accent);
+                border-radius: 10px;
+                font-size: 1rem;
+                font-family: 'Poppins', sans-serif;
+              "
+            />
+          </div>
+
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              justify-content: center;
+              flex-wrap: wrap;
+              margin-bottom: 1.5rem;
+            "
+          >
+            <button type="submit" class="btn btn-primary">
+              <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+            </button>
+            <button
+              type="button"
+              class="btn btn-primary"
+              onclick="goToRegistration()"
+            >
+              <i class="fas fa-user-plus"></i> Registrarse
+            </button>
+          </div>
+
+          <div style="text-align: center; margin-top: 1rem">
+            <a href="#" style="color: var(--secondary); text-decoration: none">
+              ¿Olvidaste tu contraseña?
+            </a>
+          </div>
+
+          <div
+            id="loginStatus"
+            style="
+              margin-top: 1.5rem;
+              padding: 1rem;
+              border-radius: 10px;
+              display: none;
+            "
+          >
+            <p id="loginMessage"></p>
+          </div>
+        </form>
+      </div>
+
+      <!-- Demo Credentials -->
+      <div
+        style="
+          background: linear-gradient(
+            135deg,
+            var(--accent) 0%,
+            var(--highlight) 100%
+          );
+          padding: 2rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin-top: 2rem;
+          text-align: center;
+          max-width: 500px;
+          margin-left: auto;
+          margin-right: auto;
+        "
+      >
+        <h4 style="color: var(--primary); margin-bottom: 1rem">
+          <i class="fas fa-info-circle"></i> Credenciales de Demostración
+        </h4>
+        <p style="color: var(--primary); margin-bottom: 1rem">
+          Usa estas credenciales para probar el sistema:
+        </p>
+        <div
+          style="
+            background: rgba(255, 255, 255, 0.3);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+          "
+        >
+          <p style="margin: 0; color: var(--primary); font-weight: 600">
+            Email: demo@agricultor.com<br />
+            Contraseña: demo123
+          </p>
+        </div>
+        <button class="btn btn-primary" onclick="fillDemoCredentials()">
+          <i class="fas fa-magic"></i> Usar Credenciales Demo
+        </button>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>
+            <div class="logo">
+              <img
+                src="assets/logo-white.png"
+                alt="Agricultura Carbono Consciente"
+                style="height: 40px; margin-right: 1rem"
+              />
+              <span>Agricultura Carbono Consciente</span>
+            </div>
+          </h4>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem">
+            Plataforma nacional para la sostenibilidad agrícola y la acción
+            climática.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="index.html#monitoreo">Panel de Monitoreo</a></li>
+            <li><a href="index.html#investigacion">Investigación</a></li>
+            <li><a href="index.html#certificacion">Certificación</a></li>
+            <li><a href="consumidor-modo.html">Zona Consumidor</a></li>
+            <li><a href="login-agricultor.html">Panel Agricultor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Política y Educación</h4>
+          <ul>
+            <li><a href="#">Apoyo a NDC Colombia</a></li>
+            <li><a href="#">Capacitaciones</a></li>
+            <li><a href="#">Convenios Institucionales</a></li>
+            <li><a href="#">Documentación Técnica</a></li>
+            <li><a href="#">Guías de Usuario</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 0.5rem"></i>
+              info@carbonoconsciente.gov.co
+            </li>
+            <li>
+              <i class="fas fa-phone" style="margin-right: 0.5rem"> </i> +57 321
+              123 00 00
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem"></i>
+              Cali, Colombia
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Plataforma Nacional de Agricultura Carbono Consciente.
+          Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Agricultor Login Functions
+      function loginAgricultor(event) {
+        event.preventDefault();
+        const email = document.getElementById("agricultorEmail").value;
+        const password = document.getElementById("agricultorPassword").value;
+        const statusDiv = document.getElementById("loginStatus");
+        const messageP = document.getElementById("loginMessage");
+
+        // Simulate login validation
+        if (email === "demo@agricultor.com" && password === "demo123") {
+          // Store login state in localStorage
+          localStorage.setItem("agricultorLoggedIn", "true");
+          localStorage.setItem("agricultorEmail", email);
+          localStorage.setItem("loginTime", new Date().toISOString());
+
+          statusDiv.style.display = "block";
+          statusDiv.style.background = "#e8f5e9";
+          statusDiv.style.borderLeft = "5px solid #4caf50";
+          messageP.textContent = `¡Bienvenido ${email}! Redirigiendo al panel...`;
+          messageP.style.color = "#2e7d32";
+
+          setTimeout(() => {
+            window.location.href = "panel-emisiones.html";
+          }, 2000);
+        } else {
+          statusDiv.style.display = "block";
+          statusDiv.style.background = "#ffebee";
+          statusDiv.style.borderLeft = "5px solid #f44336";
+          messageP.textContent =
+            "Credenciales incorrectas. Intenta con las credenciales demo.";
+          messageP.style.color = "#c62828";
+        }
+      }
+
+      function fillDemoCredentials() {
+        document.getElementById("agricultorEmail").value =
+          "demo@agricultor.com";
+        document.getElementById("agricultorPassword").value = "demo123";
+      }
+
+      function goToRegistration() {
+        window.location.href = "registro.html";
+      }
+
+      // Check if already logged in
+      document.addEventListener("DOMContentLoaded", function () {
+        if (localStorage.getItem("agricultorLoggedIn") === "true") {
+          const statusDiv = document.getElementById("loginStatus");
+          const messageP = document.getElementById("loginMessage");
+
+          statusDiv.style.display = "block";
+          statusDiv.style.background = "#e3f2fd";
+          statusDiv.style.borderLeft = "5px solid #2196f3";
+          messageP.textContent = "Ya tienes una sesión activa. Redirigiendo...";
+          messageP.style.color = "#1976d2";
+
+          setTimeout(() => {
+            window.location.href = "panel-emisiones.html";
+          },  0);
+        }
+      });
+    </script>
+  </body>
+</html>

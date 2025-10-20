@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Escáner QR - Agricultura Carbono Consciente</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="assets/logo-white.png"
+            alt="Agricultura Carbono Consciente"
+            style="height: 40px; margin-right: 1rem"
+          />
+          <span>Agricultura Carbono Consciente</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#monitoreo">Monitoreo</a></li>
+          <li><a href="index.html#investigacion">Investigación</a></li>
+          <li><a href="index.html#certificacion">Certificación</a></li>
+          <li>
+            <a href="consumidor-modo.html" class="nav-consumer">Consumidor</a>
+          </li>
+          <li>
+            <a href="login-agricultor.html" class="nav-producer">Agricultor</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 4rem 2rem">
+      <div class="hero-content">
+        <h1><i class="fas fa-qrcode"></i> Escáner QR</h1>
+        <p>
+          Descubre la historia completa de los productos certificados escaneando
+          su código QR
+        </p>
+      </div>
+    </section>
+
+    <!-- QR Scanner Section -->
+    <section class="section">
+      <div class="section-title">
+        <h2>Escanea el Código QR del Producto</h2>
+        <p>
+          Obtén información detallada sobre el origen, prácticas sostenibles y
+          certificaciones
+        </p>
+      </div>
+
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          max-width: 800px;
+          margin: 0 auto;
+        "
+      >
+        <!-- Scanner Interface -->
+        <div
+          id="scanner-container"
+          style="text-align: center; margin-bottom: 3rem"
+        >
+          <div
+            id="qr-reader"
+            style="
+              width: 100%;
+              max-width: 400px;
+              margin: 0 auto;
+              border: 3px dashed var(--accent);
+              border-radius: 20px;
+              padding: 2rem;
+              background: #f9f9f9;
+            "
+          >
+            <i
+              class="fas fa-camera"
+              style="
+                font-size: 4rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h3 style="color: var(--primary); margin-bottom: 1rem">
+              Escáner QR
+            </h3>
+            <p style="color: #666; margin-bottom: 2rem">
+              Apunta la cámara hacia el código QR del producto
+            </p>
+            <button
+              class="btn btn-primary"
+              onclick="startQRScanner()"
+              style="padding: 1rem 2rem"
+            >
+              <i class="fas fa-play"></i> Iniciar Escáner
+            </button>
+          </div>
+        </div>
+
+        <!-- Manual Input -->
+        <div
+          style="
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+          "
+        >
+          <h4 style="color: var(--primary); margin-bottom: 1rem">
+            <i class="fas fa-keyboard"></i> O Ingresa el Código Manualmente
+          </h4>
+          <div style="display: flex; gap: 1rem; align-items: center">
+            <input
+              type="text"
+              id="manualCode"
+              placeholder="Ingresa el código del producto..."
+              style="
+                flex: 1;
+                padding: 1rem;
+                border: 2px solid var(--accent);
+                border-radius: 10px;
+                font-family: 'Poppins', sans-serif;
+              "
+            />
+            <button class="btn btn-primary" onclick="verifyManualCode()">
+              <i class="fas fa-search"></i> Verificar
+            </button>
+          </div>
+        </div>
+
+        <!-- Results -->
+        <div id="qr-result" style="display: none">
+          <div
+            style="
+              background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%);
+              padding: 2rem;
+              border-radius: 15px;
+              margin-bottom: 2rem;
+            "
+          >
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              <i class="fas fa-check-circle"></i> Producto Verificado
+            </h4>
+            <div id="product-info"></div>
+          </div>
+
+          <!-- Detailed Information -->
+          <div id="detailed-info" style="display: none">
+            <div
+              style="
+                display: grid;
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+                gap: 2rem;
+              "
+            >
+              <!-- Farm Information -->
+              <div
+                style="
+                  background: white;
+                  padding: 2rem;
+                  border-radius: 15px;
+                  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <h5 style="color: var(--primary); margin-bottom: 1rem">
+                  <i class="fas fa-map-marker-alt"></i> Información de la Finca
+                </h5>
+                <div id="farm-details"></div>
+              </div>
+
+              <!-- Sustainability Practices -->
+              <div
+                style="
+                  background: white;
+                  padding: 2rem;
+                  border-radius: 15px;
+                  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <h5 style="color: var(--primary); margin-bottom: 1rem">
+                  <i class="fas fa-leaf"></i> Prácticas Sostenibles
+                </h5>
+                <div id="practices-details"></div>
+              </div>
+
+              <!-- Emissions Data -->
+              <div
+                style="
+                  background: white;
+                  padding: 2rem;
+                  border-radius: 15px;
+                  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <h5 style="color: var(--primary); margin-bottom: 1rem">
+                  <i class="fas fa-chart-line"></i> Datos de Emisiones
+                </h5>
+                <div id="emissions-details"></div>
+              </div>
+
+              <!-- Blockchain Verification -->
+              <div
+                style="
+                  background: white;
+                  padding: 2rem;
+                  border-radius: 15px;
+                  box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+                "
+              >
+                <h5 style="color: var(--primary); margin-bottom: 1rem">
+                  <i class="fas fa-link"></i> Verificación Blockchain
+                </h5>
+                <div id="blockchain-details"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- How it Works -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin: 3rem 0;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-info-circle"></i> ¿Cómo Funciona?
+        </h3>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+          "
+        >
+          <div style="text-align: center; padding: 1.5rem">
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: var(--secondary);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1rem;
+                font-size: 2rem;
+                color: white;
+              "
+            >
+              1
+            </div>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Escanea
+            </h4>
+            <p style="color: #666">
+              Usa la cámara para escanear el código QR del producto
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem">
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: var(--secondary);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1rem;
+                font-size: 2rem;
+                color: white;
+              "
+            >
+              2
+            </div>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Verifica
+            </h4>
+            <p style="color: #666">
+              El sistema verifica la autenticidad en blockchain
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem">
+            <div
+              style="
+                width: 80px;
+                height: 80px;
+                background: var(--secondary);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin: 0 auto 1rem;
+                font-size: 2rem;
+                color: white;
+              "
+            >
+              3
+            </div>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Descubre
+            </h4>
+            <p style="color: #666">Conoce la historia completa del producto</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div
+        style="
+          background: linear-gradient(
+            135deg,
+            var(--secondary) 0%,
+            var(--primary) 100%
+          );
+          padding: 3rem;
+          border-radius: 20px;
+          margin: 3rem 0;
+          text-align: center;
+        "
+      >
+        <h3 style="color: var(--light); margin-bottom: 2rem">
+          <i class="fas fa-star"></i> Beneficios del Escáner QR
+        </h3>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+          "
+        >
+          <div style="background: var(--light); padding: 2rem; border-radius: 15px">
+            <i
+              class="fas fa-shield-alt"
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary)">Transparencia</h4>
+            <p style="color: #666; font-size: 0.9rem">
+              Información verificada y confiable
+            </p>
+          </div>
+          <div style="background: var(--light); padding: 2rem; border-radius: 15px">
+            <i
+              class="fas fa-leaf"
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary)">Sostenibilidad</h4>
+            <p style="color: #666; font-size: 0.9rem">
+              Conoce el impacto ambiental
+            </p>
+          </div>
+          <div style="background: var(--light); padding: 2rem; border-radius: 15px">
+            <i
+              class="fas fa-users"
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary)">Trazabilidad</h4>
+            <p style="color: #666; font-size: 0.9rem">
+              Desde la finca hasta tu mesa
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>
+            <div class="logo">
+              <img
+                src="assets/logo-white.png"
+                alt="Agricultura Carbono Consciente"
+                style="height: 40px; margin-right: 1rem"
+              />
+              <span>Agricultura Carbono Consciente</span>
+            </div>
+          </h4>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem">
+            Plataforma nacional para la sostenibilidad agrícola y la acción
+            climática.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="index.html#monitoreo">Panel de Monitoreo</a></li>
+            <li><a href="index.html#investigacion">Investigación</a></li>
+            <li><a href="index.html#certificacion">Certificación</a></li>
+            <li><a href="consumidor-modo.html">Zona Consumidor</a></li>
+            <li><a href="login-agricultor.html">Panel Agricultor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Política y Educación</h4>
+          <ul>
+            <li><a href="#">Apoyo a NDC Colombia</a></li>
+            <li><a href="#">Capacitaciones</a></li>
+            <li><a href="#">Convenios Institucionales</a></li>
+            <li><a href="#">Documentación Técnica</a></li>
+            <li><a href="#">Guías de Usuario</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 0.5rem"></i>
+              info@carbonoconsciente.gov.co
+            </li>
+            <li>
+              <i class="fas fa-phone" style="margin-right: 0.5rem"> </i> +57 321
+              123 00 00
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem"></i>
+              Cali, Colombia
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Plataforma Nacional de Agricultura Carbono Consciente.
+          Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // QR Scanner Functions
+      function startQRScanner() {
+        const scannerContainer = document.getElementById("qr-reader");
+        const resultDiv = document.getElementById("qr-result");
+
+        // Simulate camera access
+        scannerContainer.innerHTML = `
+          <div style="background: #000; border-radius: 15px; padding: 2rem; margin-bottom: 1rem;">
+            <div style="width: 200px; height: 200px; border: 2px solid var(--highlight); border-radius: 10px; margin: 0 auto; position: relative;">
+              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--highlight); font-size: 3rem;">
+                <i class="fas fa-qrcode"></i>
+              </div>
+            </div>
+          </div>
+          <p style="color: #666;">Escaneando código QR...</p>
+          <button class="btn btn-primary" onclick="simulateQRScan()" style="margin-top: 1rem;">
+            <i class="fas fa-qrcode"></i> Simular Escaneo
+          </button>
+        `;
+
+        // Simulate scanning process
+        setTimeout(() => {
+          simulateQRScan();
+        }, 3000);
+      }
+
+      function simulateQRScan() {
+        showProductResult();
+      }
+
+      function verifyManualCode() {
+        const code = document.getElementById("manualCode").value;
+        if (code.trim()) {
+          showProductResult();
+        } else {
+          alert("Por favor ingresa un código válido");
+        }
+      }
+
+      function showProductResult() {
+        const resultDiv = document.getElementById("qr-result");
+        const productInfo = document.getElementById("product-info");
+        const detailedInfo = document.getElementById("detailed-info");
+
+        resultDiv.style.display = "block";
+        detailedInfo.style.display = "block";
+
+        productInfo.innerHTML = `
+          <h5 style="color: var(--primary); margin-bottom: 1rem;">Arroz Carbono Consciente - Finca La Esperanza</h5>
+          <p style="color: #666; margin-bottom: 0.5rem;"><strong>Productor:</strong> Carlos Mendoza</p>
+          <p style="color: #666; margin-bottom: 0.5rem;"><strong>Ubicación:</strong> Jamundí, Valle del Cauca</p>
+          <p style="color: #666; margin-bottom: 0.5rem;"><strong>Certificación:</strong> ✅ Verificada</p>
+          <p style="color: #666;"><strong>Emisiones:</strong> 35% menos que promedio regional</p>
+        `;
+
+        document.getElementById("farm-details").innerHTML = `
+          <p><strong>Nombre:</strong> Finca La Esperanza</p>
+          <p><strong>Ubicación:</strong> Jamundí, Valle del Cauca</p>
+          <p><strong>Tamaño:</strong> 8.5 hectáreas</p>
+          <p><strong>Productor:</strong> Carlos Mendoza</p>
+          <p><strong>Certificada desde:</strong> Enero 2024</p>
+        `;
+
+        document.getElementById("practices-details").innerHTML = `
+          <ul style="list-style: none; padding: 0;">
+            <li style="padding: 0.3rem 0;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i>Riego optimizado</li>
+            <li style="padding: 0.3rem 0;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i>Rotación de cultivos</li>
+            <li style="padding: 0.3rem 0;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i>Cobertura vegetal</li>
+            <li style="padding: 0.3rem 0;"><i class="fas fa-check" style="color: var(--secondary); margin-right: 0.5rem;"></i>Fertilización balanceada</li>
+          </ul>
+        `;
+
+        document.getElementById("emissions-details").innerHTML = `
+          <p><strong>CH₄:</strong> 180 kg/ha (-35% vs promedio)</p>
+          <p><strong>N₂O:</strong> 8 kg/ha (-22% vs promedio)</p>
+          <p><strong>CO₂:</strong> 2.1 ton/ha (-28% vs promedio)</p>
+          <p><strong>Certificación:</strong> ISO 14001</p>
+        `;
+
+        document.getElementById("blockchain-details").innerHTML = `
+          <p><strong>Hash:</strong> 0x7a8b9c2d3e4f5a6b7c8d9...</p>
+          <p><strong>Fecha registro:</strong> 15/01/2024</p>
+          <p><strong>Última actualización:</strong> 20/12/2024</p>
+          <p><strong>Verificación:</strong> ✅ Confirmada</p>
+        `;
+      }
+    </script>
+  </body>
+</html>

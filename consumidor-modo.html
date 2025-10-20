@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Modo Consumidor - Agricultura Carbono Consciente</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="assets/logo-white.png"
+            alt="Agricultura Carbono Consciente"
+            style="height: 40px; margin-right: 1rem"
+          />
+          <span>Agricultura Carbono Consciente</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#monitoreo">Monitoreo</a></li>
+          <li><a href="index.html#investigacion">Investigación</a></li>
+          <li><a href="index.html#certificacion">Certificación</a></li>
+          <li>
+            <a href="consumidor-modo.html" class="nav-consumer">Consumidor</a>
+          </li>
+          <li>
+            <a href="login-agricultor.html" class="nav-producer">Agricultor</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 3rem 2rem">
+      <div class="hero-content">
+        <h1><i class="fas fa-shopping-cart"></i> Modo Consumidor</h1>
+        <p>
+          Descubre productos sostenibles, calcula tu impacto ambiental y toma
+          decisiones conscientes
+        </p>
+      </div>
+    </section>
+
+    <!-- Main Consumer Tools -->
+    <section class="section">
+      <!-- QR Scanner -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin-bottom: 3rem;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-qrcode"></i> Escáner de Productos
+        </h3>
+        <div style="text-align: center">
+          <a
+            href="escaner-qr.html"
+            class="btn btn-primary"
+            style="
+              padding: 1rem 2rem;
+              text-decoration: none;
+              display: inline-flex;
+              align-items: center;
+              gap: 0.5rem;
+            "
+          >
+            <i class="fas fa-play"></i>
+            Iniciar Escáner
+          </a>
+        </div>
+      </div>
+
+      <!-- Product Search -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin-bottom: 3rem;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-search"></i> Buscador de Productos Certificados
+        </h3>
+
+        <div style="max-width: 800px; margin: 0 auto">
+          <div style="display: flex; gap: 1rem; margin-bottom: 2rem">
+            <input
+              type="text"
+              id="productSearch"
+              placeholder="Buscar por producto, marca o región..."
+              style="
+                flex: 1;
+                padding: 1rem;
+                border: 2px solid var(--accent);
+                border-radius: 50px;
+                font-family: 'Poppins', sans-serif;
+                font-size: 1rem;
+              "
+            />
+            <button
+              class="btn btn-primary"
+              onclick="searchProducts()"
+              style="border-radius: 50px; padding: 1rem 2rem"
+            >
+              <i class="fas fa-search"></i> Buscar
+            </button>
+          </div>
+
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              justify-content: center;
+              flex-wrap: wrap;
+              margin-bottom: 2rem;
+            "
+          >
+            <span
+              class="tag"
+              onclick="filterByCategory('arroz')"
+              style="cursor: pointer"
+              >Arroz</span
+            >
+            <span
+              class="tag"
+              onclick="filterByCategory('lacteos')"
+              style="cursor: pointer"
+              >Lácteos</span
+            >
+            <span
+              class="tag"
+              onclick="filterByCategory('carne')"
+              style="cursor: pointer"
+              >Carne</span
+            >
+            <span
+              class="tag"
+              onclick="filterByCategory('hortalizas')"
+              style="cursor: pointer"
+              >Hortalizas</span
+            >
+            <span
+              class="tag"
+              onclick="filterByCategory('cafe')"
+              style="cursor: pointer"
+              >Café</span
+            >
+            <span
+              class="tag"
+              onclick="filterByCategory('frutas')"
+              style="cursor: pointer"
+              >Frutas</span
+            >
+          </div>
+
+          <div id="searchResults" style="display: none">
+            <h4 style="color: var(--primary); margin-bottom: 1.5rem">
+              Resultados de Búsqueda
+            </h4>
+            <div id="productsGrid"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Impact Calculator -->
+      <div class="calculator" style="margin-bottom: 3rem">
+        <h3><i class="fas fa-calculator"></i> Calcula tu Impacto Ambiental</h3>
+        <div class="calculator-input">
+          <label>Producto comprado</label>
+          <select id="productSelect">
+            <option value="">Selecciona un producto...</option>
+            <option value="arroz">Arroz Carbono Consciente (1 kg)</option>
+            <option value="leche">Leche Carbono Consciente (1 litro)</option>
+            <option value="carne">Carne Carbono Consciente (1 kg)</option>
+            <option value="cafe">Café Carbono Consciente (500g)</option>
+            <option value="huevos">
+              Huevos Carbono Consciente (12 unidades)
+            </option>
+            <option value="tomates">Tomates Carbono Consciente (1 kg)</option>
+          </select>
+        </div>
+        <div class="calculator-input">
+          <label>Cantidad consumida al mes</label>
+          <input
+            type="number"
+            id="quantityInput"
+            value="5"
+            min="1"
+            placeholder="Ej: 5"
+          />
+        </div>
+        <button
+          class="btn btn-primary"
+          style="width: 100%"
+          onclick="calculateImpact()"
+        >
+          <i class="fas fa-calculator"></i> Calcular Ahorro
+        </button>
+        <div class="calculator-result" id="result" style="display: none">
+          <h4 id="resultValue">0 kg CO₂</h4>
+          <p>Has ahorrado al planeta este mes</p>
+          <p style="font-size: 0.9rem; opacity: 0.9; margin-top: 1rem">
+            <i class="fas fa-tree"></i> Equivalente a plantar
+            <span id="trees">0</span> árboles
+          </p>
+          <div style="margin-top: 1.5rem">
+            <button
+              class="btn btn-secondary"
+              onclick="shareImpact()"
+              style="width: 100%"
+            >
+              <i class="fas fa-share"></i> Compartir mi Impacto
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Educational Content -->
+      <div
+        style="
+          background: linear-gradient(
+            135deg,
+            var(--accent) 0%,
+            var(--highlight) 100%
+          );
+          padding: 4rem 2rem;
+          border-radius: 30px;
+          margin: 3rem 0;
+          text-align: center;
+        "
+      >
+        <h3 style="color: var(--primary); margin-bottom: 2rem; font-size: 2rem">
+          ¿Por qué elegir productos Carbono Consciente?
+        </h3>
+        <div class="dashboard-grid">
+          <div style="background: white; padding: 2rem; border-radius: 20px">
+            <i
+              class="fas fa-cloud"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">-40%</h4>
+            <p style="color: #666">
+              Menos emisiones que productos convencionales
+            </p>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: 20px">
+            <i
+              class="fas fa-heart"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">100%</h4>
+            <p style="color: #666">Prácticas regenerativas certificadas</p>
+          </div>
+          <div style="background: white; padding: 2rem; border-radius: 20px">
+            <i
+              class="fas fa-users"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">+2,000</h4>
+            <p style="color: #666">Familias rurales beneficiadas</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Stories -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin-bottom: 3rem;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-book-open"></i> Historias de Productos
+        </h3>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+          "
+        >
+          <div class="story-card">
+            <div
+              class="story-image"
+              style="
+                background: linear-gradient(135deg, #73a04e 0%, #d2dc8f 100%);
+                height: 200px;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <i
+                class="fas fa-seedling"
+                style="font-size: 4rem; color: white"
+              ></i>
+            </div>
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              Arroz de Finca La Esperanza
+            </h4>
+            <p style="color: #666; margin-bottom: 1rem">
+              Conoce cómo Carlos Mendoza redujo las emisiones de su arroz en un
+              35% implementando técnicas de riego optimizado y rotación de
+              cultivos.
+            </p>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <span style="color: var(--secondary); font-weight: 600"
+                >-35% emisiones</span
+              >
+              <button class="btn btn-primary" onclick="readStory('arroz')">
+                <i class="fas fa-play"></i> Ver Historia
+              </button>
+            </div>
+          </div>
+
+          <div class="story-card">
+            <div
+              class="story-image"
+              style="
+                background: linear-gradient(135deg, #3498db 0%, #85c1e9 100%);
+                height: 200px;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <i
+                class="fas fa-coffee"
+                style="font-size: 4rem; color: white"
+              ></i>
+            </div>
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              Café de Campo Regenerativo
+            </h4>
+            <p style="color: #666; margin-bottom: 1rem">
+              Ana García transformó su finca cafetera implementando sistemas
+              agroforestales que capturan carbono y mejoran la biodiversidad.
+            </p>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <span style="color: var(--secondary); font-weight: 600"
+                >+20% biodiversidad</span
+              >
+              <button class="btn btn-primary" onclick="readStory('cafe')">
+                <i class="fas fa-play"></i> Ver Historia
+              </button>
+            </div>
+          </div>
+
+          <div class="story-card">
+            <div
+              class="story-image"
+              style="
+                background: linear-gradient(135deg, #e74c3c 0%, #f1948a 100%);
+                height: 200px;
+                border-radius: 15px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                margin-bottom: 1.5rem;
+              "
+            >
+              <i
+                class="fas fa-apple-alt"
+                style="font-size: 4rem; color: white"
+              ></i>
+            </div>
+            <h4 style="color: var(--primary); margin-bottom: 1rem">
+              Hortalizas de Hacienda Verde
+            </h4>
+            <p style="color: #666; margin-bottom: 1rem">
+              María Rodríguez cultiva hortalizas usando compostaje y técnicas de
+              agricultura regenerativa que mejoran la salud del suelo.
+            </p>
+            <div
+              style="
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+              "
+            >
+              <span style="color: var(--secondary); font-weight: 600"
+                >100% orgánico</span
+              >
+              <button class="btn btn-primary" onclick="readStory('hortalizas')">
+                <i class="fas fa-play"></i> Ver Historia
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Consumer Tips -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin-bottom: 3rem;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-lightbulb"></i> Consejos para Consumidores
+          Conscientes
+        </h3>
+
+        <div
+          style="
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+          "
+        >
+          <div class="tip-card">
+            <i
+              class="fas fa-search"
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Busca el Sello
+            </h4>
+            <p style="color: #666; font-size: 0.9rem">
+              Siempre busca productos con el sello "Carbono Consciente" para
+              asegurar prácticas sostenibles.
+            </p>
+          </div>
+
+          <div class="tip-card">
+            <i
+              class="fas fa-qrcode"
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Escanea el QR
+            </h4>
+            <p style="color: #666; font-size: 0.9rem">
+              Usa el escáner QR para conocer la historia completa del producto y
+              verificar su certificación.
+            </p>
+          </div>
+
+          <div class="tip-card">
+            <i
+              class="fas fa-shopping-basket"
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Compra Local
+            </h4>
+            <p style="color: #666; font-size: 0.9rem">
+              Prefiere productos locales para reducir la huella de carbono del
+              transporte.
+            </p>
+          </div>
+
+          <div class="tip-card">
+            <i
+              class="fas fa-calendar-alt"
+              style="
+                font-size: 2rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Temporada
+            </h4>
+            <p style="color: #666; font-size: 0.9rem">
+              Consume productos de temporada para apoyar ciclos naturales y
+              reducir emisiones.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>
+            <div class="logo">
+              <img
+                src="assets/logo-white.png"
+                alt="Agricultura Carbono Consciente"
+                style="height: 40px; margin-right: 1rem"
+              />
+              <span>Agricultura Carbono Consciente</span>
+            </div>
+          </h4>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem">
+            Plataforma nacional para la sostenibilidad agrícola y la acción
+            climática.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="index.html#monitoreo">Panel de Monitoreo</a></li>
+            <li><a href="index.html#investigacion">Investigación</a></li>
+            <li><a href="index.html#certificacion">Certificación</a></li>
+            <li><a href="consumidor-modo.html">Zona Consumidor</a></li>
+            <li><a href="login-agricultor.html">Panel Agricultor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Política y Educación</h4>
+          <ul>
+            <li><a href="#">Apoyo a NDC Colombia</a></li>
+            <li><a href="#">Capacitaciones</a></li>
+            <li><a href="#">Convenios Institucionales</a></li>
+            <li><a href="#">Documentación Técnica</a></li>
+            <li><a href="#">Guías de Usuario</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 0.5rem"></i>
+              info@carbonoconsciente.gov.co
+            </li>
+            <li>
+              <i class="fas fa-phone" style="margin-right: 0.5rem"> </i> +57 321
+              123 00 00
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem"></i>
+              Cali, Colombia
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Plataforma Nacional de Agricultura Carbono Consciente.
+          Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Consumer Mode Functions
+      function startQRScanner() {
+        const scannerContainer = document.getElementById("qr-reader");
+        scannerContainer.innerHTML = `
+          <div style="background: #000; border-radius: 15px; padding: 2rem; margin-bottom: 1rem;">
+            <div style="width: 200px; height: 200px; border: 2px solid var(--highlight); border-radius: 10px; margin: 0 auto; position: relative;">
+              <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: var(--highlight); font-size: 3rem;">
+                <i class="fas fa-qrcode"></i>
+              </div>
+            </div>
+          </div>
+          <p style="color: #666;">Escaneando código QR...</p>
+          <button class="btn btn-secondary simulate-btn" onclick="simulateQRScan()" style="margin-top: 1rem;">
+            <i class="fas fa-qrcode"></i> Simular Escaneo
+          </button>
+        `;
+
+        setTimeout(() => {
+          simulateQRScan();
+        }, 3000);
+      }
+
+      function simulateQRScan() {
+        showProductResult();
+      }
+
+      function verifyManualCode() {
+        const code = document.getElementById("manualCode").value;
+        if (code.trim()) {
+          showProductResult();
+        } else {
+          alert("Por favor ingresa un código válido");
+        }
+      }
+
+      function showProductResult() {
+        const resultDiv = document.getElementById("qr-result");
+        const productInfo = document.getElementById("product-info");
+
+        resultDiv.style.display = "block";
+        productInfo.innerHTML = `
+          <h5 style="color: var(--primary); margin-bottom: 1rem;">Arroz Carbono Consciente - Finca La Esperanza</h5>
+          <p style="color: #666; margin-bottom: 0.5rem;"><strong>Productor:</strong> Carlos Mendoza</p>
+          <p style="color: #666; margin-bottom: 0.5rem;"><strong>Ubicación:</strong> Jamundí, Valle del Cauca</p>
+          <p style="color: #666; margin-bottom: 0.5rem;"><strong>Certificación:</strong> ✅ Verificada</p>
+          <p style="color: #666; margin-bottom: 0.5rem;"><strong>Emisiones:</strong> 35% menos que promedio regional</p>
+          <p style="color: #666;"><strong>Prácticas:</strong> Riego optimizado, rotación de cultivos</p>
+        `;
+      }
+
+      function searchProducts() {
+        const searchTerm = document.getElementById("productSearch").value;
+        if (searchTerm.trim()) {
+          showSearchResults(searchTerm);
+        } else {
+          alert("Por favor ingresa un término de búsqueda");
+        }
+      }
+
+      function showSearchResults(searchTerm) {
+        const resultsDiv = document.getElementById("searchResults");
+        const productsGrid = document.getElementById("productsGrid");
+
+        resultsDiv.style.display = "block";
+
+        // Simulate search results
+        const products = [
+          {
+            name: "Arroz Carbono Consciente",
+            producer: "Finca La Esperanza",
+            location: "Valle del Cauca",
+            emissions: "-35%",
+            price: "$8,500/kg",
+          },
+          {
+            name: "Café Carbono Consciente",
+            producer: "Campo Regenerativo",
+            location: "Meta",
+            emissions: "-28%",
+            price: "$12,000/500g",
+          },
+          {
+            name: "Tomates Carbono Consciente",
+            producer: "Hacienda Verde",
+            location: "Cundinamarca",
+            emissions: "-42%",
+            price: "$4,500/kg",
+          },
+        ];
+
+        productsGrid.innerHTML = products
+          .map(
+            (product) => `
+          <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;">
+            <h5 style="color: var(--primary); margin-bottom: 0.5rem;">${product.name}</h5>
+            <p style="color: #666; margin-bottom: 0.3rem;"><strong>Productor:</strong> ${product.producer}</p>
+            <p style="color: #666; margin-bottom: 0.3rem;"><strong>Ubicación:</strong> ${product.location}</p>
+            <p style="color: #666; margin-bottom: 0.3rem;"><strong>Reducción:</strong> ${product.emissions}</p>
+            <p style="color: var(--secondary); font-weight: 600; margin-bottom: 1rem;"><strong>Precio:</strong> ${product.price}</p>
+            <button class="btn btn-primary" onclick="viewProductDetails('${product.name}')">
+              <i class="fas fa-info-circle"></i> Ver Detalles
+            </button>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function filterByCategory(category) {
+        // Clear search input
+        document.getElementById("productSearch").value = "";
+
+        // Show filtered results
+        showFilteredResults(category);
+      }
+
+      function showFilteredResults(category) {
+        const resultsDiv = document.getElementById("searchResults");
+        const productsGrid = document.getElementById("productsGrid");
+
+        resultsDiv.style.display = "block";
+
+        // Category-specific products
+        const categoryProducts = {
+          arroz: [
+            {
+              name: "Arroz Carbono Consciente",
+              producer: "Finca La Esperanza",
+              location: "Valle del Cauca",
+              emissions: "-35%",
+              price: "$8,500/kg",
+            },
+            {
+              name: "Arroz Orgánico Premium",
+              producer: "Hacienda Verde",
+              location: "Tolima",
+              emissions: "-28%",
+              price: "$9,200/kg",
+            },
+          ],
+          lacteos: [
+            {
+              name: "Leche Carbono Consciente",
+              producer: "Finca Lechera Sostenible",
+              location: "Antioquia",
+              emissions: "-25%",
+              price: "$4,500/litro",
+            },
+            {
+              name: "Queso Artesanal",
+              producer: "Quesería La Esperanza",
+              location: "Boyacá",
+              emissions: "-30%",
+              price: "$12,000/kg",
+            },
+          ],
+          carne: [
+            {
+              name: "Carne Carbono Consciente",
+              producer: "Ganadería Regenerativa",
+              location: "Meta",
+              emissions: "-40%",
+              price: "$18,000/kg",
+            },
+          ],
+          hortalizas: [
+            {
+              name: "Tomates Carbono Consciente",
+              producer: "Hacienda Verde",
+              location: "Cundinamarca",
+              emissions: "-42%",
+              price: "$4,500/kg",
+            },
+            {
+              name: "Lechuga Hidropónica",
+              producer: "Invernadero Sostenible",
+              location: "Valle del Cauca",
+              emissions: "-35%",
+              price: "$3,200/kg",
+            },
+          ],
+          cafe: [
+            {
+              name: "Café Carbono Consciente",
+              producer: "Campo Regenerativo",
+              location: "Meta",
+              emissions: "-28%",
+              price: "$12,000/500g",
+            },
+            {
+              name: "Café Especial Premium",
+              producer: "Finca Cafetera",
+              location: "Huila",
+              emissions: "-32%",
+              price: "$15,000/500g",
+            },
+          ],
+          frutas: [
+            {
+              name: "Banano Orgánico",
+              producer: "Finca Frutal",
+              location: "Magdalena",
+              emissions: "-25%",
+              price: "$2,800/kg",
+            },
+            {
+              name: "Aguacate Hass",
+              producer: "Frutales Sostenibles",
+              location: "Antioquia",
+              emissions: "-30%",
+              price: "$6,500/kg",
+            },
+          ],
+        };
+
+        const products = categoryProducts[category] || [];
+
+        productsGrid.innerHTML = products
+          .map(
+            (product) => `
+          <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 15px; margin-bottom: 1rem;">
+            <h5 style="color: var(--primary); margin-bottom: 0.5rem;">${product.name}</h5>
+            <p style="color: #666; margin-bottom: 0.3rem;"><strong>Productor:</strong> ${product.producer}</p>
+            <p style="color: #666; margin-bottom: 0.3rem;"><strong>Ubicación:</strong> ${product.location}</p>
+            <p style="color: #666; margin-bottom: 0.3rem;"><strong>Reducción:</strong> ${product.emissions}</p>
+            <p style="color: var(--secondary); font-weight: 600; margin-bottom: 1rem;"><strong>Precio:</strong> ${product.price}</p>
+            <button class="btn btn-primary" onclick="viewProductDetails('${product.name}')">
+              <i class="fas fa-info-circle"></i> Ver Detalles
+            </button>
+          </div>
+        `
+          )
+          .join("");
+      }
+
+      function viewProductDetails(productName) {
+        showNotification(`Detalles de ${productName} próximamente`, "info");
+      }
+
+      function shareImpact() {
+        const impact = document.getElementById("resultValue").textContent;
+        const trees = document.getElementById("trees").textContent;
+
+        showNotification(
+          `Impacto compartido: ${impact} ahorrados, equivalente a ${trees} árboles plantados`,
+          "success"
+        );
+      }
+
+      function readStory(storyType) {
+        const stories = {
+          arroz:
+            "Historia completa del arroz de Finca La Esperanza próximamente",
+          cafe: "Historia completa del café de Campo Regenerativo próximamente",
+          hortalizas:
+            "Historia completa de las hortalizas de Hacienda Verde próximamente",
+        };
+
+        showNotification(stories[storyType], "info");
+      }
+
+      // Initialize consumer mode
+      document.addEventListener("DOMContentLoaded", function () {
+        // Add any initialization code here
+      });
+    </script>
+
+    <style>
+      /* Consumer Mode Specific Styles */
+      .story-card {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s;
+      }
+
+      .story-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+
+      .tip-card {
+        background: #f8f9fa;
+        padding: 2rem;
+        border-radius: 15px;
+        text-align: center;
+        transition: all 0.3s;
+      }
+
+      .tip-card:hover {
+        background: white;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        transform: translateY(-3px);
+      }
+
+      .tag {
+        background: var(--accent);
+        color: var(--primary);
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
+
+      .tag:hover {
+        background: var(--secondary);
+        color: white;
+        transform: translateY(-2px);
+      }
+    </style>
+  </body>
+</html>

@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Plataforma Nacional de Agricultura Carbono Consciente</title>
+    <link rel="icon" href="assets/logo-white.png" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="assets/logo-white.png"
+            alt="Agricultura Carbono Consciente"
+            style="height: 40px; margin-right: 1rem"
+          />
+          <span>Agricultura Carbono Consciente</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#monitoreo">Monitoreo</a></li>
+          <li><a href="#investigacion">Investigación</a></li>
+          <li><a href="#certificacion">Certificación</a></li>
+          <li>
+            <a href="consumidor-modo.html" class="nav-consumer">Consumidor</a>
+          </li>
+          <li>
+            <a href="login-agricultor.html" class="nav-producer">Agricultor</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+      <div class="hero-content">
+        <h1>Cultivando el Futuro, Reduciendo Emisiones</h1>
+        <p>
+          Plataforma integral para monitorear, certificar y promover prácticas
+          agrícolas sostenibles que combaten el cambio climático
+        </p>
+
+        <!-- User Type Selector -->
+        <div class="user-selector">
+          <h3 style="color: white; margin-bottom: 2rem; font-size: 1.5rem">
+            <i class="fas fa-users"></i> ¿Cómo quieres participar?
+          </h3>
+          <div class="user-cards">
+            <div class="user-card" onclick="goToConsumerMode()">
+              <div class="user-icon">
+                <i class="fas fa-shopping-cart"></i>
+              </div>
+              <h4>Consumidor</h4>
+              <p>
+                Descubre productos sostenibles, escanea códigos QR y calcula tu
+                impacto ambiental
+              </p>
+              <div class="user-features">
+                <span><i class="fas fa-qrcode"></i> Escáner QR</span>
+                <span><i class="fas fa-calculator"></i> Calculadora</span>
+                <span><i class="fas fa-search"></i> Buscador</span>
+              </div>
+            </div>
+
+            <div class="user-card" onclick="goToProducerMode()">
+              <div class="user-icon">
+                <i class="fas fa-tractor"></i>
+              </div>
+              <h4>Agricultor</h4>
+              <p>
+                Monitorea emisiones, gestiona tu finca y únete a la comunidad de
+                productores sostenibles
+              </p>
+              <div class="user-features">
+                <span><i class="fas fa-chart-line"></i> Panel Emisiones</span>
+                <span><i class="fas fa-seedling"></i> Registro Finca</span>
+                <span><i class="fas fa-users"></i> Comunidad</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cta-buttons">
+          <a href="#monitoreo" class="btn btn-primary">Ver Monitoreo</a>
+          <a href="#investigacion" class="btn btn-secondary">Investigación</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Stats Section -->
+    <div class="stats">
+      <div class="stat-card">
+        <i class="fas fa-tractor"></i>
+        <h3>2,450</h3>
+        <p>Productores Certificados</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-chart-line"></i>
+        <h3>35%</h3>
+        <p>Reducción de Emisiones</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-seedling"></i>
+        <h3>15,890</h3>
+        <p>Hectáreas Monitoreadas</p>
+      </div>
+      <div class="stat-card">
+        <i class="fas fa-award"></i>
+        <h3>1,200</h3>
+        <p>Productos Certificados</p>
+      </div>
+    </div>
+
+    <!-- Dashboard Section -->
+    <section class="section" id="monitoreo">
+      <div class="section-title">
+        <h2>Panel de Monitoreo en Tiempo Real</h2>
+        <p>
+          Visualiza y gestiona las emisiones de tu cultivo con tecnología de
+          punta
+        </p>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="dashboard-card">
+          <h3><i class="fas fa-cloud"></i> Emisiones de CH₄</h3>
+          <div class="chart-container">
+            <canvas id="ch4Chart"></canvas>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Este mes</span>
+            <span class="metric-value"
+              >-18% <i class="fas fa-arrow-down"></i
+            ></span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Promedio zona</span>
+            <span class="metric-value">245 kg/ha</span>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <h3><i class="fas fa-wind"></i> Emisiones de N₂O</h3>
+          <div class="chart-container">
+            <canvas id="n2oChart"></canvas>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Este mes</span>
+            <span class="metric-value"
+              >-22% <i class="fas fa-arrow-down"></i
+            ></span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Promedio zona</span>
+            <span class="metric-value">12 kg/ha</span>
+          </div>
+        </div>
+
+        <div class="dashboard-card">
+          <h3><i class="fas fa-thermometer-half"></i> Sensores en Campo</h3>
+          <div class="metric">
+            <span class="metric-label">Temperatura</span>
+            <span class="metric-value">28°C</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Humedad</span>
+            <span class="metric-value">75%</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Nivel de agua</span>
+            <span class="metric-value">Óptimo</span>
+          </div>
+          <div class="metric">
+            <span class="metric-label">Última lectura</span>
+            <span class="metric-value">Hace 5 min</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="alert-box" style="margin-top: 2rem">
+        <h4><i class="fas fa-lightbulb"></i> Recomendación IA</h4>
+        <p>
+          Reducir los días de anegamiento en 3 días puede disminuir tus
+          emisiones de CH₄ en un 20%. Tu lote #4 presenta condiciones óptimas
+          para implementar esta práctica.
+        </p>
+      </div>
+    </section>
+
+    <!-- Research Section -->
+    <section class="section" id="investigacion">
+      <div class="section-title">
+        <h2>Investigación e Innovación</h2>
+        <p>
+          Conoce los proyectos y variedades que están transformando la
+          agricultura
+        </p>
+      </div>
+
+      <div class="map-container">
+        <h3 style="color: var(--primary); margin-bottom: 1.5rem">
+          <i class="fas fa-map-marked-alt"></i> Mapa de Proyectos Activos
+        </h3>
+        <div
+          id="researchMap"
+          style="
+            height: 500px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+          "
+        ></div>
+        <div
+          style="
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+          "
+        >
+          <div style="display: flex; align-items: center; gap: 0.5rem">
+            <div
+              style="
+                width: 20px;
+                height: 20px;
+                background: #e74c3c;
+                border-radius: 50%;
+              "
+            ></div>
+            <span style="color: #666">Proyectos de Arroz</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem">
+            <div
+              style="
+                width: 20px;
+                height: 20px;
+                background: #3498db;
+                border-radius: 50%;
+              "
+            ></div>
+            <span style="color: #666">Proyectos de Forrajes</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.5rem">
+            <div
+              style="
+                width: 20px;
+                height: 20px;
+                background: #2ecc71;
+                border-radius: 50%;
+              "
+            ></div>
+            <span style="color: #666">Proyectos Mixtos</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Variedades Climáticamente Inteligentes -->
+      <div style="margin-top: 4rem">
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-seedling"></i> Variedades Climáticamente Inteligentes
+        </h3>
+        <div class="varieties-grid">
+          <div class="variety-card">
+            <div class="variety-header">
+              <h4>FEDEARROZ 2000</h4>
+              <div class="variety-badge">Certificada</div>
+            </div>
+            <div class="variety-stats">
+              <div class="stat">
+                <span class="stat-label">Reducción CH₄</span>
+                <span class="stat-value">-35%</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Rendimiento</span>
+                <span class="stat-value">+12%</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Resistencia</span>
+                <span class="stat-value">Alta</span>
+              </div>
+            </div>
+            <p class="variety-description">
+              Variedad desarrollada específicamente para reducir emisiones de
+              metano manteniendo alta productividad.
+            </p>
+            <div class="variety-actions">
+              <button
+                class="btn btn-primary"
+                onclick="downloadVarietyInfo('fedearroz2000')"
+              >
+                <i class="fas fa-download"></i> Ficha Técnica
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="showVarietyDetails('fedearroz2000')"
+              >
+                <i class="fas fa-info-circle"></i> Detalles
+              </button>
+            </div>
+          </div>
+
+          <div class="variety-card">
+            <div class="variety-header">
+              <h4>ARROZ CLIMA PLUS</h4>
+              <div class="variety-badge">En Prueba</div>
+            </div>
+            <div class="variety-stats">
+              <div class="stat">
+                <span class="stat-label">Reducción CH₄</span>
+                <span class="stat-value">-42%</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Rendimiento</span>
+                <span class="stat-value">+8%</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Resistencia</span>
+                <span class="stat-value">Media</span>
+              </div>
+            </div>
+            <p class="variety-description">
+              Nueva variedad experimental con potencial para reducir emisiones
+              hasta 42% en condiciones controladas.
+            </p>
+            <div class="variety-actions">
+              <button
+                class="btn btn-primary"
+                onclick="downloadVarietyInfo('climaplus')"
+              >
+                <i class="fas fa-download"></i> Ficha Técnica
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="showVarietyDetails('climaplus')"
+              >
+                <i class="fas fa-info-circle"></i> Detalles
+              </button>
+            </div>
+          </div>
+
+          <div class="variety-card">
+            <div class="variety-header">
+              <h4>FORRAJE VERDE SMART</h4>
+              <div class="variety-badge">Certificada</div>
+            </div>
+            <div class="variety-stats">
+              <div class="stat">
+                <span class="stat-label">Reducción CH₄</span>
+                <span class="stat-value">-28%</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Proteína</span>
+                <span class="stat-value">+18%</span>
+              </div>
+              <div class="stat">
+                <span class="stat-label">Resistencia</span>
+                <span class="stat-value">Alta</span>
+              </div>
+            </div>
+            <p class="variety-description">
+              Forraje mejorado para ganadería que reduce emisiones de metano del
+              ganado y mejora la digestibilidad.
+            </p>
+            <div class="variety-actions">
+              <button
+                class="btn btn-primary"
+                onclick="downloadVarietyInfo('forrajesmart')"
+              >
+                <i class="fas fa-download"></i> Ficha Técnica
+              </button>
+              <button
+                class="btn btn-secondary"
+                onclick="showVarietyDetails('forrajesmart')"
+              >
+                <i class="fas fa-info-circle"></i> Detalles
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="research-grid">
+        <div class="research-card">
+          <div class="research-image">
+            <i class="fas fa-flask"></i>
+          </div>
+          <div class="research-content">
+            <h3>Variedades de Arroz Bajo en Metano</h3>
+            <p>
+              Desarrollo de variedades genéticamente optimizadas para reducir
+              emisiones de CH₄ hasta en 40% sin sacrificar rendimiento.
+            </p>
+            <div class="tag">Valle del Cauca</div>
+            <div class="tag">Fase III</div>
+            <button
+              class="btn btn-primary"
+              style="margin-top: 1rem; padding: 0.6rem 1.5rem"
+            >
+              <a
+                style="color: var(--primary); text-decoration: none"
+                href="https://www.sciencedirect.com/science/article/pii/S0048969724011197"
+                target="_blank"
+              >
+                <i class="fas fa-external-link-alt"></i> Conocer Más</a
+              >
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Success Stories -->
+      <div style="margin-top: 4rem">
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-star"></i> Historias de Éxito
+        </h3>
+        <div class="testimonials">
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>
+                "Implementar la variedad FEDEARROZ 2000 redujo mis emisiones en
+                35% y mantuve mi producción. El monitoreo digital me ayudó a
+                optimizar el riego."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="author-info">
+                <h5>Carlos Mendoza</h5>
+                <p>Productor - Ibagué, Tolima</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>
+                "Las prácticas regenerativas no solo redujeron emisiones, sino
+                que mejoraron la salud del suelo. Ahora tengo certificación y
+                mejores precios."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="author-info">
+                <h5>María Rodríguez</h5>
+                <p>Productora - Jamundí, Valle</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card">
+            <div class="testimonial-content">
+              <p>
+                "Los forrajes climáticamente inteligentes transformaron mi
+                ganadería. Menos metano, más productividad y un ingreso
+                adicional por créditos de carbono."
+              </p>
+            </div>
+            <div class="testimonial-author">
+              <div class="author-avatar">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="author-info">
+                <h5>Jorge Páez</h5>
+                <p>Ganadero - Villavicencio, Meta</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certification Section -->
+    <section class="section" id="certificacion">
+      <div class="section-title">
+        <h2>Certificación Carbono Consciente</h2>
+        <p>Obtén el sello que diferencia tus productos en el mercado</p>
+      </div>
+
+      <div class="cert-process">
+        <div class="cert-step">
+          <div class="cert-step-number">1</div>
+          <h4>Registro</h4>
+          <p>
+            Registra tu finca y proporciona información básica sobre tus
+            prácticas actuales
+          </p>
+        </div>
+
+        <div class="cert-step">
+          <div class="cert-step-number">2</div>
+          <h4>Monitoreo</h4>
+          <p>
+            Instala sensores y registra datos de emisiones durante un ciclo
+            productivo
+          </p>
+        </div>
+
+        <div class="cert-step">
+          <div class="cert-step-number">3</div>
+          <h4>Auditoría</h4>
+          <p>
+            Verificación técnica de datos y prácticas por evaluadores
+            certificados
+          </p>
+        </div>
+
+        <div class="cert-step">
+          <div class="cert-step-number">4</div>
+          <h4>Certificación</h4>
+          <p>Recibe tu sello y accede a incentivos y mercados premium</p>
+        </div>
+      </div>
+
+      <!-- Benefits -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin: 3rem 0;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-gift"></i> Beneficios de la Certificación
+        </h3>
+        <div class="dashboard-grid">
+          <div style="text-align: center; padding: 1.5rem">
+            <i
+              class="fas fa-dollar-sign"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Pagos por Servicios
+            </h4>
+            <p style="color: #666">
+              Recibe compensación económica por reducción de emisiones
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem">
+            <i
+              class="fas fa-chart-line"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Mejores Precios
+            </h4>
+            <p style="color: #666">
+              Acceso a mercados premium que valoran la sostenibilidad
+            </p>
+          </div>
+          <div style="text-align: center; padding: 1.5rem">
+            <i
+              class="fas fa-link"
+              style="
+                font-size: 3rem;
+                color: var(--secondary);
+                margin-bottom: 1rem;
+              "
+            ></i>
+            <h4 style="color: var(--primary); margin-bottom: 0.5rem">
+              Trazabilidad Blockchain
+            </h4>
+            <p style="color: #666">Transparencia total en la cadena de valor</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Blockchain Trazability -->
+      <div
+        style="
+          background: white;
+          padding: 3rem;
+          border-radius: 20px;
+          box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+          margin: 3rem 0;
+        "
+      >
+        <h3
+          style="color: var(--primary); text-align: center; margin-bottom: 2rem"
+        >
+          <i class="fas fa-link"></i> Trazabilidad Blockchain
+        </h3>
+        <div class="blockchain-info">
+          <h4>
+            <i class="fas fa-shield-alt"></i> Transparencia Total en la Cadena
+            de Valor
+          </h4>
+          <p>
+            Cada producto certificado está registrado en blockchain,
+            garantizando transparencia y verificabilidad de:
+          </p>
+          <div
+            style="
+              display: grid;
+              grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+              gap: 1.5rem;
+              margin-top: 1.5rem;
+            "
+          >
+            <div style="text-align: center; padding: 1rem">
+              <i
+                class="fas fa-map-marker-alt"
+                style="
+                  font-size: 2rem;
+                  color: var(--secondary);
+                  margin-bottom: 0.5rem;
+                "
+              ></i>
+              <h5 style="color: var(--primary); margin-bottom: 0.5rem">
+                Origen
+              </h5>
+              <p style="color: #666; font-size: 0.9rem">
+                Ubicación exacta de la finca y coordenadas GPS
+              </p>
+            </div>
+            <div style="text-align: center; padding: 1rem">
+              <i
+                class="fas fa-calendar-alt"
+                style="
+                  font-size: 2rem;
+                  color: var(--secondary);
+                  margin-bottom: 0.5rem;
+                "
+              ></i>
+              <h5 style="color: var(--primary); margin-bottom: 0.5rem">
+                Cronología
+              </h5>
+              <p style="color: #666; font-size: 0.9rem">
+                Historial completo desde siembra hasta cosecha
+              </p>
+            </div>
+            <div style="text-align: center; padding: 1rem">
+              <i
+                class="fas fa-leaf"
+                style="
+                  font-size: 2rem;
+                  color: var(--secondary);
+                  margin-bottom: 0.5rem;
+                "
+              ></i>
+              <h5 style="color: var(--primary); margin-bottom: 0.5rem">
+                Prácticas
+              </h5>
+              <p style="color: #666; font-size: 0.9rem">
+                Registro detallado de prácticas sostenibles
+              </p>
+            </div>
+            <div style="text-align: center; padding: 1rem">
+              <i
+                class="fas fa-chart-line"
+                style="
+                  font-size: 2rem;
+                  color: var(--secondary);
+                  margin-bottom: 0.5rem;
+                "
+              ></i>
+              <h5 style="color: var(--primary); margin-bottom: 0.5rem">
+                Emisiones
+              </h5>
+              <p style="color: #666; font-size: 0.9rem">
+                Mediciones verificadas de gases de efecto invernadero
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Blockchain Demo -->
+        <div
+          style="
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+          "
+        >
+          <h4 style="color: var(--primary); margin-bottom: 1rem">
+            <i class="fas fa-search"></i> Verificar Producto en Blockchain
+          </h4>
+          <div
+            style="
+              display: flex;
+              gap: 1rem;
+              align-items: center;
+              flex-wrap: wrap;
+            "
+          >
+            <input
+              type="text"
+              placeholder="Ingresa el código del producto o escanea QR"
+              style="
+                flex: 1;
+                min-width: 200px;
+                padding: 1rem;
+                border: 2px solid var(--accent);
+                border-radius: 10px;
+                font-family: 'Poppins', sans-serif;
+              "
+            />
+            <button class="btn btn-primary" onclick="verifyBlockchainProduct()">
+              <i class="fas fa-search"></i> Verificar
+            </button>
+          </div>
+          <div
+            id="blockchain-result"
+            style="
+              margin-top: 1rem;
+              padding: 1rem;
+              background: #e8f5e9;
+              border-radius: 10px;
+              display: none;
+            "
+          >
+            <h5 style="color: var(--primary)">✅ Producto Verificado</h5>
+            <p id="blockchain-info" style="color: #666; margin: 0"></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>
+            <div class="logo">
+              <img
+                src="assets/logo-white.png"
+                alt="Agricultura Carbono Consciente"
+                style="height: 40px; margin-right: 1rem"
+              />
+              <span>Agricultura Carbono Consciente</span>
+            </div>
+          </h4>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem">
+            Plataforma nacional para la sostenibilidad agrícola y la acción
+            climática.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="index.html#monitoreo">Panel de Monitoreo</a></li>
+            <li><a href="index.html#investigacion">Investigación</a></li>
+            <li><a href="index.html#certificacion">Certificación</a></li>
+            <li><a href="consumidor-modo.html">Zona Consumidor</a></li>
+            <li><a href="login-agricultor.html">Panel Agricultor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Política y Educación</h4>
+          <ul>
+            <li><a href="#">Apoyo a NDC Colombia</a></li>
+            <li><a href="#">Capacitaciones</a></li>
+            <li><a href="#">Convenios Institucionales</a></li>
+            <li><a href="#">Documentación Técnica</a></li>
+            <li><a href="#">Guías de Usuario</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 0.5rem"></i>
+              info@carbonoconsciente.gov.co
+            </li>
+            <li>
+              <i class="fas fa-phone" style="margin-right: 0.5rem"> </i> +57 321
+              123 00 00
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem"></i>
+              Cali, Colombia
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Plataforma Nacional de Agricultura Carbono Consciente.
+          Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+</html>

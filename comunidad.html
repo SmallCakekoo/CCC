@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Comunidad - Agricultura Carbono Consciente</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <nav>
+        <div class="logo">
+          <img
+            src="assets/logo-white.png"
+            alt="Agricultura Carbono Consciente"
+            style="height: 40px; margin-right: 1rem"
+          />
+          <span>Agricultura Carbono Consciente</span>
+        </div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+          <i class="fas fa-bars"></i>
+        </button>
+        <ul class="nav-links" id="navLinks">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="index.html#monitoreo">Monitoreo</a></li>
+          <li><a href="index.html#investigacion">Investigación</a></li>
+          <li><a href="index.html#certificacion">Certificación</a></li>
+          <li>
+            <a href="consumidor-modo.html" class="nav-consumer">Consumidor</a>
+          </li>
+          <li>
+            <a href="login-agricultor.html" class="nav-producer">Agricultor</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" style="padding: 3rem 2rem">
+      <div class="hero-content">
+        <h1><i class="fas fa-users"></i> Comunidad de Productores</h1>
+        <p>
+          Conecta, comparte experiencias y aprende de otros productores
+          sostenibles
+        </p>
+      </div>
+    </section>
+
+    <!-- Community Stats -->
+    <section class="section">
+      <div class="stats" style="margin-bottom: 3rem">
+        <div class="stat-card">
+          <i class="fas fa-users"></i>
+          <h3>2,847</h3>
+          <p>Productores Activos</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-comments"></i>
+          <h3>15,432</h3>
+          <p>Conversaciones</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-lightbulb"></i>
+          <h3>3,891</h3>
+          <p>Consejos Compartidos</p>
+        </div>
+        <div class="stat-card">
+          <i class="fas fa-handshake"></i>
+          <h3>1,256</h3>
+          <p>Colaboraciones</p>
+        </div>
+      </div>
+
+      <!-- Main Community Content -->
+      <div style="display: grid; grid-template-columns: 1fr 300px; gap: 3rem">
+        <!-- Main Forum Content -->
+        <div>
+          <!-- Create Post -->
+          <div
+            style="
+              background: white;
+              padding: 2rem;
+              border-radius: 20px;
+              box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+              margin-bottom: 2rem;
+            "
+          >
+            <h3 style="color: var(--primary); margin-bottom: 1.5rem">
+              <i class="fas fa-edit"></i> Comparte tu Experiencia
+            </h3>
+            <form id="createPostForm" onsubmit="createPost(event)">
+              <div style="margin-bottom: 1.5rem">
+                <label
+                  for="postTitle"
+                  style="
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    color: var(--primary);
+                    font-weight: 600;
+                  "
+                >
+                  <i class="fas fa-heading"></i> Título del Post
+                </label>
+                <input
+                  type="text"
+                  id="postTitle"
+                  placeholder="Escribe un título descriptivo para tu post..."
+                  required
+                  style="
+                    width: 100%;
+                    padding: 1rem;
+                    border: 2px solid var(--accent);
+                    border-radius: 10px;
+                    font-size: 1rem;
+                    font-family: 'Poppins', sans-serif;
+                    transition: border-color 0.3s;
+                  "
+                  onfocus="this.style.borderColor='var(--secondary)'"
+                  onblur="this.style.borderColor='var(--accent)'"
+                />
+              </div>
+
+              <div style="margin-bottom: 1.5rem">
+                <label
+                  for="postCategory"
+                  style="
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    color: var(--primary);
+                    font-weight: 600;
+                  "
+                >
+                  <i class="fas fa-tags"></i> Categoría
+                </label>
+                <select
+                  id="postCategory"
+                  required
+                  style="
+                    width: 100%;
+                    padding: 1rem;
+                    border: 2px solid var(--accent);
+                    border-radius: 10px;
+                    font-size: 1rem;
+                    font-family: 'Poppins', sans-serif;
+                    background: white;
+                    transition: border-color 0.3s;
+                  "
+                >
+                  <option value="">Selecciona una categoría...</option>
+                  <option value="experiencias">🌱 Experiencias</option>
+                  <option value="consejos">💡 Consejos y Tips</option>
+                  <option value="problemas">🔧 Problemas y Soluciones</option>
+                  <option value="tecnologia">📱 Tecnología</option>
+                  <option value="certificacion">🏆 Certificación</option>
+                  <option value="general">💬 General</option>
+                </select>
+              </div>
+
+              <div style="margin-bottom: 1.5rem">
+                <label
+                  for="postContent"
+                  style="
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    color: var(--primary);
+                    font-weight: 600;
+                  "
+                >
+                  <i class="fas fa-edit"></i> Contenido
+                </label>
+                <textarea
+                  id="postContent"
+                  rows="6"
+                  placeholder="Comparte tu experiencia, consejos o preguntas con la comunidad..."
+                  required
+                  style="
+                    width: 100%;
+                    padding: 1rem;
+                    border: 2px solid var(--accent);
+                    border-radius: 10px;
+                    font-size: 1rem;
+                    font-family: 'Poppins', sans-serif;
+                    resize: vertical;
+                    min-height: 120px;
+                    transition: border-color 0.3s;
+                  "
+                  onfocus="this.style.borderColor='var(--secondary)'"
+                  onblur="this.style.borderColor='var(--accent)'"
+                ></textarea>
+              </div>
+
+              <div style="margin-bottom: 1.5rem">
+                <label
+                  for="postTags"
+                  style="
+                    display: block;
+                    margin-bottom: 0.5rem;
+                    color: var(--primary);
+                    font-weight: 600;
+                  "
+                >
+                  <i class="fas fa-hashtag"></i> Etiquetas (opcional)
+                </label>
+                <input
+                  type="text"
+                  id="postTags"
+                  placeholder="Escribe etiquetas separadas por comas (ej: sostenibilidad, riego, arroz)"
+                  style="
+                    width: 100%;
+                    padding: 1rem;
+                    border: 2px solid var(--accent);
+                    border-radius: 10px;
+                    font-size: 1rem;
+                    font-family: 'Poppins', sans-serif;
+                    transition: border-color 0.3s;
+                  "
+                  onfocus="this.style.borderColor='var(--secondary)'"
+                  onblur="this.style.borderColor='var(--accent)'"
+                />
+              </div>
+
+              <div
+                style="
+                  display: flex;
+                  gap: 1rem;
+                  align-items: center;
+                  flex-wrap: wrap;
+                  justify-content: space-between;
+                "
+              >
+                <div style="display: flex; gap: 1rem; align-items: center">
+                  <button
+                    type="submit"
+                    class="btn btn-primary"
+                    style="padding: 1rem 2rem"
+                  >
+                    <i class="fas fa-paper-plane"></i> Publicar Post
+                  </button>
+                  <button
+                    type="button"
+                    class="btn btn-secondary"
+                    onclick="clearForm()"
+                    style="padding: 1rem 1.5rem"
+                  >
+                    <i class="fas fa-eraser"></i> Limpiar
+                  </button>
+                </div>
+
+                <label
+                  style="
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                    color: #666;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                  "
+                >
+                  <input
+                    type="checkbox"
+                    id="anonymousPost"
+                    style="transform: scale(1.2)"
+                  />
+                  <span
+                    ><i class="fas fa-user-secret"></i> Publicar
+                    anónimamente</span
+                  >
+                </label>
+              </div>
+            </form>
+          </div>
+
+          <!-- Forum Posts -->
+          <div id="forumPosts">
+            <!-- Featured Post -->
+            <div class="forum-post featured">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar">
+                    <img
+                      src="https://randomuser.me/api/portraits/women/44.jpg"
+                      alt="María Rodríguez"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        aspect-ratio: 1 / 1;
+                      "
+                    />
+                  </div>
+                  <div class="author-info">
+                    <h5>María Rodríguez</h5>
+                    <span>Finca Verde - Valle del Cauca</span>
+                  </div>
+                </div>
+                <div class="post-meta">
+                  <span class="post-category">Experiencias</span>
+                  <span class="post-time">Hace 2 horas</span>
+                </div>
+              </div>
+              <div class="post-content">
+                <h4>Mi experiencia con la rotación de cultivos</h4>
+                <p>
+                  Después de 6 meses implementando rotación de arroz con
+                  leguminosas, he visto una reducción del 25% en mis emisiones
+                  de N₂O. El suelo también está mucho más saludable...
+                </p>
+                <div class="post-tags">
+                  <span class="tag">#rotación</span>
+                  <span class="tag">#leguminosas</span>
+                  <span class="tag">#suelo</span>
+                </div>
+              </div>
+              <div class="post-actions">
+                <button class="action-btn" onclick="likePost(1)">
+                  <i class="fas fa-heart"></i> 24
+                </button>
+                <button class="action-btn" onclick="commentPost(1)">
+                  <i class="fas fa-comment"></i> 8
+                </button>
+                <button class="action-btn" onclick="sharePost(1)">
+                  <i class="fas fa-share"></i> Compartir
+                </button>
+              </div>
+            </div>
+
+            <!-- Regular Posts -->
+            <div class="forum-post">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar">
+                    <img
+                      src="https://randomuser.me/api/portraits/men/32.jpg"
+                      alt="Carlos Mendoza"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        aspect-ratio: 1 / 1;
+                      "
+                    />
+                  </div>
+                  <div class="author-info">
+                    <h5>Carlos Mendoza</h5>
+                    <span>Finca La Esperanza - Tolima</span>
+                  </div>
+                </div>
+                <div class="post-meta">
+                  <span class="post-category">Consejos</span>
+                  <span class="post-time">Hace 4 horas</span>
+                </div>
+              </div>
+              <div class="post-content">
+                <h4>Tip: Optimización del riego para reducir emisiones</h4>
+                <p>
+                  He estado experimentando con diferentes técnicas de riego y
+                  encontré que el riego intermitente reduce significativamente
+                  las emisiones de CH₄...
+                </p>
+                <div class="post-tags">
+                  <span class="tag">#riego</span>
+                  <span class="tag">#optimización</span>
+                </div>
+              </div>
+              <div class="post-actions">
+                <button class="action-btn" onclick="likePost(2)">
+                  <i class="fas fa-heart"></i> 18
+                </button>
+                <button class="action-btn" onclick="commentPost(2)">
+                  <i class="fas fa-comment"></i> 5
+                </button>
+                <button class="action-btn" onclick="sharePost(2)">
+                  <i class="fas fa-share"></i> Compartir
+                </button>
+              </div>
+            </div>
+
+            <div class="forum-post">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar">
+                    <img
+                      src="https://randomuser.me/api/portraits/women/68.jpg"
+                      alt="Ana García"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        aspect-ratio: 1 / 1;
+                      "
+                    />
+                  </div>
+                  <div class="author-info">
+                    <h5>Ana García</h5>
+                    <span>Campo Regenerativo - Meta</span>
+                  </div>
+                </div>
+                <div class="post-meta">
+                  <span class="post-category">Problemas</span>
+                  <span class="post-time">Hace 6 horas</span>
+                </div>
+              </div>
+              <div class="post-content">
+                <h4>¿Alguien ha tenido problemas con sensores IoT?</h4>
+                <p>
+                  Mis sensores de humedad han estado dando lecturas
+                  inconsistentes. ¿Alguien más ha experimentado esto? ¿Tienen
+                  alguna solución?
+                </p>
+                <div class="post-tags">
+                  <span class="tag">#sensores</span>
+                  <span class="tag">#IoT</span>
+                  <span class="tag">#ayuda</span>
+                </div>
+              </div>
+              <div class="post-actions">
+                <button class="action-btn" onclick="likePost(3)">
+                  <i class="fas fa-heart"></i> 12
+                </button>
+                <button class="action-btn" onclick="commentPost(3)">
+                  <i class="fas fa-comment"></i> 15
+                </button>
+                <button class="action-btn" onclick="sharePost(3)">
+                  <i class="fas fa-share"></i> Compartir
+                </button>
+              </div>
+            </div>
+
+            <div class="forum-post">
+              <div class="post-header">
+                <div class="post-author">
+                  <div class="author-avatar">
+                    <img
+                      src="https://randomuser.me/api/portraits/men/75.jpg"
+                      alt="Jorge Páez"
+                      style="
+                        width: 100%;
+                        height: 100%;
+                        border-radius: 50%;
+                        object-fit: cover;
+                      "
+                    />
+                  </div>
+                  <div class="author-info">
+                    <h5>Jorge Páez</h5>
+                    <span>Hacienda Sostenible - Santander</span>
+                  </div>
+                </div>
+                <div class="post-meta">
+                  <span class="post-category">Tecnología</span>
+                  <span class="post-time">Hace 1 día</span>
+                </div>
+              </div>
+              <div class="post-content">
+                <h4>Nueva app para monitoreo de emisiones</h4>
+                <p>
+                  He desarrollado una aplicación móvil que integra con los
+                  sensores de la plataforma. Permite recibir alertas en tiempo
+                  real y generar reportes automáticos...
+                </p>
+                <div class="post-tags">
+                  <span class="tag">#app</span>
+                  <span class="tag">#móvil</span>
+                  <span class="tag">#desarrollo</span>
+                </div>
+              </div>
+              <div class="post-actions">
+                <button class="action-btn" onclick="likePost(4)">
+                  <i class="fas fa-heart"></i> 31
+                </button>
+                <button class="action-btn" onclick="commentPost(4)">
+                  <i class="fas fa-comment"></i> 12
+                </button>
+                <button class="action-btn" onclick="sharePost(4)">
+                  <i class="fas fa-share"></i> Compartir
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sidebar -->
+        <div>
+          <!-- Categories -->
+          <div
+            style="
+              background: white;
+              padding: 2rem;
+              border-radius: 20px;
+              box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+              margin-bottom: 2rem;
+            "
+          >
+            <h4 style="color: var(--primary); margin-bottom: 1.5rem">
+              <i class="fas fa-list"></i> Categorías
+            </h4>
+            <div class="category-list">
+              <a href="#" class="category-item active">
+                <span>Todas</span>
+                <span class="count">156</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Experiencias</span>
+                <span class="count">45</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Consejos</span>
+                <span class="count">38</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Problemas</span>
+                <span class="count">28</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Tecnología</span>
+                <span class="count">22</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>Certificación</span>
+                <span class="count">15</span>
+              </a>
+              <a href="#" class="category-item">
+                <span>General</span>
+                <span class="count">8</span>
+              </a>
+            </div>
+          </div>
+
+          <!-- Top Contributors -->
+          <div
+            style="
+              background: white;
+              padding: 2rem;
+              border-radius: 20px;
+              box-shadow: 0 5px 30px rgba(0, 0, 0, 0.08);
+              margin-bottom: 2rem;
+            "
+          >
+            <h4 style="color: var(--primary); margin-bottom: 1.5rem">
+              <i class="fas fa-star"></i> Top Contribuidores
+            </h4>
+            <div class="contributor-list">
+              <div class="contributor-item">
+                <div class="contributor-avatar">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/44.jpg"
+                    alt="María Rodríguez"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="contributor-info">
+                  <h6>María Rodríguez</h6>
+                  <span>Finca Verde</span>
+                </div>
+                <div class="contributor-points">2,450 pts</div>
+              </div>
+              <div class="contributor-item">
+                <div class="contributor-avatar">
+                  <img
+                    src="https://randomuser.me/api/portraits/men/32.jpg"
+                    alt="Carlos Mendoza"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="contributor-info">
+                  <h6>Carlos Mendoza</h6>
+                  <span>Finca La Esperanza</span>
+                </div>
+                <div class="contributor-points">1,890 pts</div>
+              </div>
+              <div class="contributor-item">
+                <div class="contributor-avatar">
+                  <img
+                    src="https://randomuser.me/api/portraits/women/68.jpg"
+                    alt="Ana García"
+                    style="
+                      width: 100%;
+                      height: 100%;
+                      border-radius: 50%;
+                      object-fit: cover;
+                    "
+                  />
+                </div>
+                <div class="contributor-info">
+                  <h6>Ana García</h6>
+                  <span>Campo Regenerativo</span>
+                </div>
+                <div class="contributor-points">1,650 pts</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h4>
+            <div class="logo">
+              <img
+                src="assets/logo-white.png"
+                alt="Agricultura Carbono Consciente"
+                style="height: 40px; margin-right: 1rem"
+              />
+              <span>Agricultura Carbono Consciente</span>
+            </div>
+          </h4>
+          <p style="color: rgba(255, 255, 255, 0.8); margin-bottom: 1.5rem">
+            Plataforma nacional para la sostenibilidad agrícola y la acción
+            climática.
+          </p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+
+        <div class="footer-section">
+          <h4>Plataforma</h4>
+          <ul>
+            <li><a href="index.html#monitoreo">Panel de Monitoreo</a></li>
+            <li><a href="index.html#investigacion">Investigación</a></li>
+            <li><a href="index.html#certificacion">Certificación</a></li>
+            <li><a href="consumidor-modo.html">Zona Consumidor</a></li>
+            <li><a href="login-agricultor.html">Panel Agricultor</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Política y Educación</h4>
+          <ul>
+            <li><a href="#">Apoyo a NDC Colombia</a></li>
+            <li><a href="#">Capacitaciones</a></li>
+            <li><a href="#">Convenios Institucionales</a></li>
+            <li><a href="#">Documentación Técnica</a></li>
+            <li><a href="#">Guías de Usuario</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-section">
+          <h4>Contacto</h4>
+          <ul>
+            <li>
+              <i class="fas fa-envelope" style="margin-right: 0.5rem"></i>
+              info@carbonoconsciente.gov.co
+            </li>
+            <li>
+              <i class="fas fa-phone" style="margin-right: 0.5rem"> </i> +57 321
+              123 00 00
+            </li>
+            <li>
+              <i class="fas fa-map-marker-alt" style="margin-right: 0.5rem"></i>
+              Cali, Colombia
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>
+          &copy; 2025 Plataforma Nacional de Agricultura Carbono Consciente.
+          Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+      // Community Functions
+      function createPost(event) {
+        event.preventDefault();
+        const title = document.getElementById("postTitle").value;
+        const category = document.getElementById("postCategory").value;
+        const content = document.getElementById("postContent").value;
+        const tags = document.getElementById("postTags").value;
+        const anonymous = document.getElementById("anonymousPost").checked;
+
+        showNotification("Post publicado exitosamente", "success");
+
+        // Reset form
+        document.getElementById("createPostForm").reset();
+
+        // Simulate adding new post
+        setTimeout(() => {
+          addNewPost(title, category, content, tags, anonymous);
+        }, 1000);
+      }
+
+      function clearForm() {
+        document.getElementById("createPostForm").reset();
+        showNotification("Formulario limpiado", "info");
+      }
+
+      function addNewPost(title, category, content, tags, anonymous) {
+        const postsContainer = document.getElementById("forumPosts");
+        const authorName = anonymous ? "Usuario Anónimo" : "Carlos Mendoza";
+        const authorFarm = anonymous ? "Finca Privada" : "Finca La Esperanza";
+
+        // Process tags
+        let tagsHTML = "";
+        if (tags && tags.trim()) {
+          const tagArray = tags
+            .split(",")
+            .map((tag) => tag.trim())
+            .filter((tag) => tag);
+          tagsHTML = `
+            <div class="post-tags">
+              ${tagArray
+                .map((tag) => `<span class="tag">#${tag}</span>`)
+                .join("")}
+            </div>
+          `;
+        }
+
+        const newPost = document.createElement("div");
+        newPost.className = "forum-post";
+        newPost.innerHTML = `
+          <div class="post-header">
+            <div class="post-author">
+              <div class="author-avatar">
+                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="${authorName}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+              </div>
+              <div class="author-info">
+                <h5>${authorName}</h5>
+                <span>${authorFarm}</span>
+              </div>
+            </div>
+            <div class="post-meta">
+              <span class="post-category">${category}</span>
+              <span class="post-time">Ahora</span>
+            </div>
+          </div>
+          <div class="post-content">
+            <h4>${title}</h4>
+            <p>${content}</p>
+            ${tagsHTML}
+          </div>
+          <div class="post-actions">
+            <button class="action-btn" onclick="likePost(${Date.now()})">
+              <i class="fas fa-heart"></i> 0
+            </button>
+            <button class="action-btn" onclick="commentPost(${Date.now()})">
+              <i class="fas fa-comment"></i> 0
+            </button>
+            <button class="action-btn" onclick="sharePost(${Date.now()})">
+              <i class="fas fa-share"></i> Compartir
+            </button>
+          </div>
+        `;
+
+        postsContainer.insertBefore(newPost, postsContainer.firstChild);
+      }
+
+      function likePost(postId) {
+        showNotification("Post marcado como útil", "success");
+      }
+
+      function commentPost(postId) {
+        showNotification("Funcionalidad de comentarios próximamente", "info");
+      }
+
+      function sharePost(postId) {
+        showNotification("Post compartido", "success");
+      }
+    </script>
+
+    <style>
+      /* Community Specific Styles */
+      .forum-post {
+        background: white;
+        padding: 2rem;
+        border-radius: 15px;
+        box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        transition: all 0.3s;
+      }
+
+      .forum-post:hover {
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+        transform: translateY(-2px);
+      }
+
+      .forum-post.featured {
+        border-left: 5px solid var(--secondary);
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      }
+
+      .post-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+      }
+
+      .post-author {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .author-avatar {
+        width: 50px;
+        height: 50px;
+        background: var(--secondary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+      }
+
+      .author-info h5 {
+        margin: 0;
+        color: var(--primary);
+        font-size: 1rem;
+      }
+
+      .author-info span {
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .post-meta {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 0.3rem;
+      }
+
+      .post-category {
+        background: var(--accent);
+        color: var(--primary);
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .post-time {
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .post-content h4 {
+        color: var(--primary);
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+
+      .post-content p {
+        color: #666;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .post-tags {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+
+      .tag {
+        background: #e9ecef;
+        color: #666;
+        padding: 0.3rem 0.8rem;
+        border-radius: 15px;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      .post-actions {
+        display: flex;
+        gap: 1rem;
+        padding-top: 1rem;
+        border-top: 1px solid #e9ecef;
+      }
+
+      .action-btn {
+        background: none;
+        border: none;
+        color: #666;
+        cursor: pointer;
+        padding: 0.5rem 1rem;
+        border-radius: 20px;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .action-btn:hover {
+        background: var(--accent);
+        color: var(--primary);
+      }
+
+      .category-list {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .category-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0.8rem 1rem;
+        border-radius: 10px;
+        text-decoration: none;
+        color: #666;
+        transition: all 0.3s;
+      }
+
+      .category-item:hover,
+      .category-item.active {
+        background: var(--accent);
+        color: var(--primary);
+      }
+
+      .count {
+        background: rgba(0, 0, 0, 0.1);
+        padding: 0.2rem 0.6rem;
+        border-radius: 10px;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+
+      .category-item.active .count {
+        background: var(--primary);
+        color: white;
+      }
+
+      .contributor-list {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .contributor-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding: 1rem;
+        background: #f8f9fa;
+        border-radius: 10px;
+      }
+
+      .contributor-avatar {
+        width: 40px;
+        height: 40px;
+        background: var(--secondary);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1rem;
+      }
+
+      .contributor-info {
+        flex: 1;
+      }
+
+      .contributor-info h6 {
+        margin: 0;
+        color: var(--primary);
+        font-size: 0.9rem;
+      }
+
+      .contributor-info span {
+        color: #666;
+        font-size: 0.8rem;
+      }
+
+      .contributor-points {
+        color: var(--secondary);
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+    </style>
+  </body>
+</html>
